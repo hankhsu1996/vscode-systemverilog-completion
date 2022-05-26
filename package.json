@@ -1,0 +1,105 @@
+{
+    "name": "systemverilog-completion",
+    "displayName": "SystemVerilog Completion",
+    "description": "SystemVerilog word-completion and abbreviations",
+    "version": "0.0.1",
+    "author": {
+        "name": "Shou-Li Hsu",
+        "email": "hank850503@gmail.com"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hankhsu1996/systemverilog-completion"
+    },
+    "engines": {
+        "vscode": "^1.67.0"
+    },
+    "icon": "resources/icon.png",
+    "categories": [
+        "Programming Languages"
+    ],
+    "keywords": [
+        "systemverilog",
+        "sv",
+        "verilog",
+        "completion"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "systemverilog",
+                "extensions": [
+                    "sv",
+                    "svh"
+                ],
+                "aliases": [
+                    "SystemVerilog",
+                    "systemverilog",
+                    "System Verilog",
+                    "Systemverilog"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "configuration": [
+            {
+                "title": "SystemVerilog Completion",
+                "properties": {
+                    "systemverilog.disableKeywordsProvider": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Disable keywords completion"
+                    },
+                    "systemverilog.disableSysTaskFuncsProvider": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Disable system tasks and system functions completion"
+                    },
+                    "systemverilog.enableOptSysTaskFuncsProvider": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Enable optional system tasks and system functions completion"
+                    },
+                    "systemverilog.disableTimingChecksProvider": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Disable SystemVerilog timing checks completion"
+                    },
+                    "systemverilog.disableComplierDirectivesProvider": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Disable SystemVerilog compiler directives completion"
+                    }
+                }
+            }
+        ]
+    },
+    "activationEvents": [
+        "onLanguage:systemverilog",
+        "onLanguage:markdown",
+        "workspaceContains:**/*.{sv,v,svh,vh}"
+    ],
+    "extensionKind": [
+        "workspace"
+    ],
+    "main": "./out/extension.js",
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src --ext ts"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.67.0",
+        "@types/glob": "^7.2.0",
+        "@types/mocha": "^9.1.1",
+        "@types/node": "14.x",
+        "@typescript-eslint/eslint-plugin": "^5.21.0",
+        "@typescript-eslint/parser": "^5.21.0",
+        "eslint": "^8.14.0",
+        "glob": "^8.0.1",
+        "typescript": "^4.6.4"
+    }
+}

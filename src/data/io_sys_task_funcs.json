@@ -1,0 +1,381 @@
+{
+    "display": [
+        {
+            "name": "$display",
+            "detail": "$display(list_of_arguments)",
+            "documentation": "The `$display` system task displays its arguments in the same order as they appear in the argument list. It automatically adds a newline character to the end of its output."
+        },
+        {
+            "name": "$displayb",
+            "detail": "$displayb(list_of_arguments)",
+            "documentation": "The `$displayb` system task displays its arguments in the same order as they appear in the argument list. It automatically adds a newline character to the end of its output. The output is formatted in binary."
+        },
+        {
+            "name": "$displayo",
+            "detail": "$displayo(list_of_arguments)",
+            "documentation": "The `$displayo` system task displays its arguments in the same order as they appear in the argument list. It automatically adds a newline character to the end of its output. The output is formatted in octal."
+        },
+        {
+            "name": "$displayh",
+            "detail": "$displayh(list_of_arguments)",
+            "documentation": "The `$displayh` system task displays its arguments in the same order as they appear in the argument list. It automatically adds a newline character to the end of its output. The output is formatted in hexadecimal."
+        },
+        {
+            "name": "$write",
+            "detail": "$write(list_of_arguments)",
+            "documentation": "The `$write` system task displays its arguments in the same order as they appear in the argument list. It does not automatically add a newline character to the end of its output."
+        },
+        {
+            "name": "$writeb",
+            "detail": "$writeb(list_of_arguments)",
+            "documentation": "The `$writeb` system task displays its arguments in the same order as they appear in the argument list. It does not automatically add a newline character to the end of its output. The output is formatted in binary."
+        },
+        {
+            "name": "$writeo",
+            "detail": "$writeo(list_of_arguments)",
+            "documentation": "The `$writeo` system task displays its arguments in the same order as they appear in the argument list. It does not automatically add a newline character to the end of its output. The output is formatted in octal."
+        },
+        {
+            "name": "$writeh",
+            "detail": "$writeh(list_of_arguments)",
+            "documentation": "The `$writeh` system task displays its arguments in the same order as they appear in the argument list. It does not automatically add a newline character to the end of its output. The output is formatted in hexadecimal."
+        },
+        {
+            "name": "$strobe",
+            "detail": "$strobe(list_of_arguments)",
+            "documentation": "The `$strobe` system task provides the ability to display simulation data at a selected time. That time is the end of the current simulation time, when all the simulation events have occurred for that simulation time, just before simulation time is advanced."
+        },
+        {
+            "name": "$strobeb",
+            "detail": "$strobeb(list_of_arguments)",
+            "documentation": "The `$strobeb` system task provides the ability to display simulation data at a selected time. That time is the end of the current simulation time, when all the simulation events have occurred for that simulation time, just before simulation time is advanced. The output is formatted in binary."
+        },
+        {
+            "name": "$strobeo",
+            "detail": "$strobeo(list_of_arguments)",
+            "documentation": "The `$strobeo` system task provides the ability to display simulation data at a selected time. That time is the end of the current simulation time, when all the simulation events have occurred for that simulation time, just before simulation time is advanced. The output is formatted in octal."
+        },
+        {
+            "name": "$strobeh",
+            "detail": "$strobeh(list_of_arguments)",
+            "documentation": "The `$strobeh` system task provides the ability to display simulation data at a selected time. That time is the end of the current simulation time, when all the simulation events have occurred for that simulation time, just before simulation time is advanced. The output is formatted in hexadecimal."
+        },
+        {
+            "name": "$monitor",
+            "detail": "$monitor(list_of_arguments)",
+            "documentation": "The `$monitor` system task provides the ability to monitor and display the values of any variables or expressions specified as arguments to the task."
+        },
+        {
+            "name": "$monitorb",
+            "detail": "$monitorb(list_of_arguments)",
+            "documentation": "The `$monitorb` system task provides the ability to monitor and display the values of any variables or expressions specified as arguments to the task. The output is formatted in binary."
+        },
+        {
+            "name": "$monitoro",
+            "detail": "$monitoro(list_of_arguments)",
+            "documentation": "The `$monitoro` system task provides the ability to monitor and display the values of any variables or expressions specified as arguments to the task. The output is formatted in octal."
+        },
+        {
+            "name": "$monitorh",
+            "detail": "$monitorh(list_of_arguments)",
+            "documentation": "The `$monitorh` system task provides the ability to monitor and display the values of any variables or expressions specified as arguments to the task. The output is formatted in hexadecimal."
+        },
+        {
+            "name": "$monitoron",
+            "detail": "$monitoron",
+            "documentation": "The `$monitoron` system tasks control a monitor flag that enables and disables the monitoring. The `$monitoron` system task can be used to turn on the flag so that monitoring is enabled and the most recent call to `$monitor` can resume its display."
+        },
+        {
+            "name": "$monitoroff",
+            "detail": "$monitoroff",
+            "documentation": "The `$monitoroff` system tasks control a monitor flag that enables and disables the monitoring. Use `$monitoroff` to turn off the flag and disable monitoring."
+        }
+    ],
+    "file_io": [
+        {
+            "name": "$fopen",
+            "detail": "$fopen(filename): mcd | $fopen(filename, type): fd",
+            "documentation": "The `$fopen` system function opens the file specified as the *filename* argument and returns either a 32-bit multichannel descriptor or a 32-bit file descriptor, determined by the absence or presence of the *type* argument."
+        },
+        {
+            "name": "$fclose",
+            "detail": "$fclose(mcd) | $fclose(fd)",
+            "documentation": "The `$fclose` system task closes the file specified by *fd* or closes the file(s) specified by the multichannel descriptor *mcd*."
+        },
+        {
+            "name": "$fdisplay",
+            "detail": "$fdisplay(mcd, list_of_arguments) | $fdisplay(fd, list_of_arguments)",
+            "documentation": "The `$fdisplay` system task writes its arguments to specific files. It automatically adds a newline character to the end of its output."
+        },
+        {
+            "name": "$fdisplayb",
+            "detail": "$fdisplayb(mcd, list_of_arguments) | $fdisplayb(fd, list_of_arguments)",
+            "documentation": "The `$fdisplayb` system task writes its arguments to specific files. It automatically adds a newline character to the end of its output. The output is formatted in binary."
+        },
+        {
+            "name": "$fdisplayh",
+            "detail": "$fdisplayh(mcd, list_of_arguments) | $fdisplayh(fd, list_of_arguments)",
+            "documentation": "The `$fdisplayh` system task writes its arguments to specific files. It automatically adds a newline character to the end of its output. The output is formatted in hexadecimal."
+        },
+        {
+            "name": "$fdisplayo",
+            "detail": "$fdisplayo(mcd, list_of_arguments) | $fdisplayo(fd, list_of_arguments)",
+            "documentation": "The `$fdisplayo` system task writes its arguments to specific files. It automatically adds a newline character to the end of its output. The output is formatted in octal."
+        },
+        {
+            "name": "$fwrite",
+            "detail": "$fwrite(mcd, list_of_arguments) | $fwrite(fd, list_of_arguments)",
+            "documentation": "The `$fwrite` system task writes its arguments to specific files. It does not automatically add a newline character to the end of its output."
+        },
+        {
+            "name": "$fwriteb",
+            "detail": "$fwriteb(mcd, list_of_arguments) | $fwriteb(fd, list_of_arguments)",
+            "documentation": "The `$fwriteb` system task writes its arguments to specific files. It does not automatically add a newline character to the end of its output. The output is formatted in binary."
+        },
+        {
+            "name": "$fwriteh",
+            "detail": "$fwriteh(mcd, list_of_arguments) | $fwriteh(fd, list_of_arguments)",
+            "documentation": "The `$fwriteh` system task writes its arguments to specific files. It does not automatically add a newline character to the end of its output. The output is formatted in hexadecimal."
+        },
+        {
+            "name": "$fwriteo",
+            "detail": "$fwriteo(mcd, list_of_arguments) | $fwriteo(fd, list_of_arguments)",
+            "documentation": "The `$fwriteo` system task writes its arguments to specific files. It does not automatically add a newline character to the end of its output. The output is formatted in octal."
+        },
+        {
+            "name": "$fstrobe",
+            "detail": "$fstrobe(mcd, list_of_arguments) | $fstrobe(fd, list_of_arguments)",
+            "documentation": "The `$fstrobe` system task provides the ability to write simulation data at a selected time to specific files. That time is the end of the current simulation time, when all the simulation events have occurred for that simulation time, just before simulation time is advanced."
+        },
+        {
+            "name": "$fstrobeb",
+            "detail": "$fstrobeb(mcd, list_of_arguments) | $fstrobeb(fd, list_of_arguments)",
+            "documentation": "The `$fstrobeb` system task provides the ability to write simulation data at a selected time to specific files. That time is the end of the current simulation time, when all the simulation events have occurred for that simulation time, just before simulation time is advanced. The output is formatted in binary."
+        },
+        {
+            "name": "$fstrobeh",
+            "detail": "$fstrobeh(mcd, list_of_arguments) | $fstrobeh(fd, list_of_arguments)",
+            "documentation": "The `$fstrobeh` system task provides the ability to write simulation data at a selected time to specific files. That time is the end of the current simulation time, when all the simulation events have occurred for that simulation time, just before simulation time is advanced. The output is formatted in hexadecimal."
+        },
+        {
+            "name": "$fstrobeo",
+            "detail": "$fstrobeo(mcd, list_of_arguments) | $fstrobeo(fd, list_of_arguments)",
+            "documentation": "The `$fstrobeo` system task provides the ability to write simulation data at a selected time to specific files. That time is the end of the current simulation time, when all the simulation events have occurred for that simulation time, just before simulation time is advanced. The output is formatted in octal."
+        },
+        {
+            "name": "$fmonitor",
+            "detail": "$fmonitor(mcd, list_of_arguments) | $fmonitor(fd, list_of_arguments)",
+            "documentation": "The `$fmonitor` system task provides the ability to monitor and write the values of any variables or expressions to specific files."
+        },
+        {
+            "name": "$fmonitorb",
+            "detail": "$fmonitorb(mcd, list_of_arguments) | $fmonitorb(fd, list_of_arguments)",
+            "documentation": "The `$fmonitorb` system task provides the ability to monitor and write the values of any variables or expressions to specific files. The output is formatted in binary."
+        },
+        {
+            "name": "$fmonitoro",
+            "detail": "$fmonitoro(mcd, list_of_arguments) | $fmonitoro(fd, list_of_arguments)",
+            "documentation": "The `$fmonitoro` system task provides the ability to monitor and write the values of any variables or expressions to specific files. The output is formatted in octal."
+        },
+        {
+            "name": "$fmonitorh",
+            "detail": "$fmonitorh(mcd, list_of_arguments) | $fmonitorh(fd, list_of_arguments)",
+            "documentation": "The `$fmonitorh` system task provides the ability to monitor and write the values of any variables or expressions to specific files. The output is formatted in hexadecimal."
+        },
+        {
+            "name": "$swrite",
+            "detail": "$swrite(output_var, list_of_arguments)",
+            "documentation": "The `$swrite` system task writes its result string to the specified output variable."
+        },
+        {
+            "name": "$swriteb",
+            "detail": "$swriteb(output_var, list_of_arguments)",
+            "documentation": "The `$swriteb` system task writes its result string to the specified output variable. The output is formatted in binary."
+        },
+        {
+            "name": "$swriteo",
+            "detail": "$swriteo(output_var, list_of_arguments)",
+            "documentation": "The `$swriteo` system task writes its result string to the specified output variable. The output is formatted in octal."
+        },
+        {
+            "name": "$swriteh",
+            "detail": "$swriteh(output_var, list_of_arguments)",
+            "documentation": "The `$swriteh` system task writes its result string to the specified output variable. The output is formatted in hexadecimal."
+        },
+        {
+            "name": "$sformat",
+            "detail": "$sformat(output_var, format_string, list_of_arguments)",
+            "documentation": "The `$sformat` system task is similar to the system task `$swrite`, with one major difference. Unlike the display and write family of output system tasks, `$sformat` always interprets its second argument, and only its second argument, as a format string."
+        },
+        {
+            "name": "$sformatf",
+            "detail": "$sformatf(format_string, list_of_arguments)",
+            "documentation": "The `$sformatf` system function behaves like `$sformat` except that the string result is passed back as the function result value for `$sformatf`, not placed in the first argument as for `$sformat`. Thus `$sformatf` can be used where a string value would be valid."
+        },
+        {
+            "name": "$fgetc",
+            "detail": "$fgetc(fd)",
+            "documentation": "A single character can be read from a file using `$fgetc`."
+        },
+        {
+            "name": "$ungetc",
+            "detail": "$ungetc(c, fd)",
+            "documentation": "`$ungetc` inserts the character specified by *c* into the buffer specified by file descriptor *fd*."
+        },
+        {
+            "name": "$fgets",
+            "detail": "$fgets(str, fd)",
+            "documentation": "One line can be read from a file using `$fgets`."
+        },
+        {
+            "name": "$fscanf",
+            "detail": "$fscanf(fd, format, args)",
+            "documentation": "The `$fscanf` system function can be used to format data as it is read from a file."
+        },
+        {
+            "name": "$sscanf",
+            "detail": "$sscanf(str, format, args)",
+            "documentation": "The `$sscanf` system function can be used to format data as it is read from a string."
+        },
+        {
+            "name": "$fread",
+            "detail": "$fread(mem, fd, start, count) | $fread(integral_var, fd)",
+            "documentation": "The `$fread` system function can be used to read binary data from a file."
+        },
+        {
+            "name": "$ftell",
+            "detail": "$ftell(fd)",
+            "documentation": "The `$ftell` system function is used to determine the current read or write position within a file."
+        },
+        {
+            "name": "$fseek",
+            "detail": "$fseek(fd, offset, operation)",
+            "documentation": "The `$fseek` system function can be used to change the current read or write position within a file."
+        },
+        {
+            "name": "$rewind",
+            "detail": "$rewind(fd)",
+            "documentation": "The `$rewind` system function can be used to change the current read or write position within a file. `$rewind` is equivalent to `$fseek (fd, 0, 0)`."
+        },
+        {
+            "name": "$fflush",
+            "detail": "$fflush(mcd|fd)",
+            "documentation": "The file I/O buffer can be flushed used `$fflush`."
+        },
+        {
+            "name": "$ferror",
+            "detail": "$ferror(fd, str)",
+            "documentation": "Should any error be detected by one of the file I/O routines, an error code is returned. Often this is sufficient for normal operation (i.e., if the opening of an optional configuration file fails, the application typically would simply continue using default values). However, sometimes it is useful to obtain more information about the error for correct application operation. In this case, the `$ferror` function can be used."
+        },
+        {
+            "name": "$feof",
+            "detail": "$feof(fd)",
+            "documentation": "EOF can be tested for using `$feof`."
+        }
+    ],
+    "mem_load": [
+        {
+            "name": "$readmemb",
+            "detail": "$readmemb(filename, memory_name, start_addr, finish_addr)",
+            "documentation": "The `$readmemb` system task reads and loads data from a specified text file into a specified memory array."
+        },
+        {
+            "name": "$readmemh",
+            "detail": "$readmemh(filename, memory_name, start_addr, finish_addr)",
+            "documentation": "The `$readmemh` system task reads and loads data from a specified text file into a specified memory array.",
+            "preselect": true
+        }
+    ],
+    "mem_dump": [
+        {
+            "name": "$writememb",
+            "detail": "$writememb(filename, memory_name, start_addr, finish_addr)",
+            "documentation": "The `$writememb` system task can be used to dump memory array contents to files that are readable by `$readmemb`."
+        },
+        {
+            "name": "$writememh",
+            "detail": "$writememh(filename, memory_name, start_addr, finish_addr)",
+            "documentation": "The `$writememh` system task can be used to dump memory array contents to files that are readable by `$readmemh`."
+        }
+    ],
+    "cmd_line": [
+        {
+            "name": "$test$plusargs",
+            "detail": "$test$plusargs(string)",
+            "documentation": "The `$test$plusargs` system function searches the list of *plusargs* for a user-specified *plusarg_string*.",
+            "preselect": true
+        },
+        {
+            "name": "$value$plusargs",
+            "detail": "$value$plusargs(user_string, variable)",
+            "documentation": "The `$value$plusargs` system function searches the list of *plusargs* (like the `$test$plusargs` system function) for a user-specified *plusarg_string*."
+        }
+    ],
+    "vcd": [
+        {
+            "name": "$dumpfile",
+            "detail": "$dumpfile(filename)",
+            "documentation": "The `$dumpfile` system task is used to specify the name of the VCD file."
+        },
+        {
+            "name": "$dumpvars",
+            "detail": "$dumpvars(levels, list_of_modules_or_variables)",
+            "documentation": "The `$dumpvars` system task is used to list which variables to dump into the file specified by `$dumpfile`."
+        },
+        {
+            "name": "$dumpoff",
+            "detail": "$dumpoff",
+            "documentation": "The `$dumpoff` system task can be invoked to suspend the dump."
+        },
+        {
+            "name": "$dumpon",
+            "detail": "$dumpon",
+            "documentation": "The `$dumpon` system task can be invoked to resume the dump."
+        },
+        {
+            "name": "$dumpall",
+            "detail": "$dumpall",
+            "documentation": "The `$dumpall` system task creates a checkpoint in the VCD file that shows the current value of all selected variables."
+        },
+        {
+            "name": "$dumplimit",
+            "detail": "$dumplimit(filesize)",
+            "documentation": "The `$dumplimit` system task can be used to set the size of the VCD file."
+        },
+        {
+            "name": "$dumpflush",
+            "detail": "$dumpflush",
+            "documentation": "The `$dumpflush` system task can be used to empty the VCD file buffer of the operating system to verify all the data in that buffer are stored in the VCD file."
+        },
+        {
+            "name": "$dumpports",
+            "detail": "$dumpports(scope_list, filename)",
+            "documentation": "The `$dumpports` system task is used to specify the name of the VCD file and the ports to be dumped."
+        },
+        {
+            "name": "$dumpportsoff",
+            "detail": "$dumpportsoff(filename)",
+            "documentation": "The `$dumpportsoff` and `$dumpportson` system tasks provide a means to control the simulation period for dumping port values."
+        },
+        {
+            "name": "$dumpportson",
+            "detail": "$dumpportson(filename)",
+            "documentation": "The `$dumpportsoff` and `$dumpportson` system tasks provide a means to control the simulation period for dumping port values."
+        },
+        {
+            "name": "$dumpportsall",
+            "detail": "$dumpportsall(filename)",
+            "documentation": "The `$dumpportsall` system task creates a checkpoint in the VCD file that shows the value of all selected ports at that time in the simulation, regardless of whether the port values have changed since the last time step."
+        },
+        {
+            "name": "$dumpportslimit",
+            "detail": "$dumpportslimit(filesize)",
+            "documentation": "The `$dumpportslimit` system task can be used to set the size of the VCD file."
+        },
+        {
+            "name": "$dumpportsflush",
+            "detail": "$dumpportsflush",
+            "documentation": "The `$dumpportsflush` system task writes all port values to the associated file, clearing a simulator’s VCD buffer. "
+        }
+    ]
+}

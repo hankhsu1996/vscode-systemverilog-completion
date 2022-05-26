@@ -1,0 +1,50 @@
+[
+    {
+        "name": "$setup",
+        "detail": "$setup(data_event, reference_event, timing_check_limit, notifier)"
+    },
+    {
+        "name": "$hold",
+        "detail": "$hold(reference_event, data_event, timing_check_limit, notifier)"
+    },
+    {
+        "name": "$setuphold",
+        "detail": "$setuphold(reference_event, data_event, timing_check_limit, timing_check_limit, notifier, timestamp_condition, timecheck_condition, delayed_reference, delayed_data)"
+    },
+    {
+        "name": "$recovery",
+        "detail": "$recovery(reference_event, data_event, timing_check_limit, notifier)"
+    },
+    {
+        "name": "$removal",
+        "detail": "$removal(reference_event, data_event, timing_check_limit, notifier)"
+    },
+    {
+        "name": "$recrem",
+        "detail": "$recrem(reference_event, data_event, timing_check_limit, timing_check_limit, notifier, timestamp_condition, timecheck_condition, delayed_reference, delayed_data)"
+    },
+    {
+        "name": "$skew",
+        "detail": "$skew(reference_event, data_event, timing_check_limit, notifier)"
+    },
+    {
+        "name": "$timeskew",
+        "detail": "$timeskew(reference_event, data_event, timing_check_limit, notifier, timestamp_condition, event_based_flag, remain_active_flag)"
+    },
+    {
+        "name": "$fullskew",
+        "detail": "$fullskew(reference_event, data_event, timing_check_limit, timing_check_limit, notifier, event_based_flag, remain_active_flag)"
+    },
+    {
+        "name": "$period",
+        "detail": "$period(controlled_reference_event, timing_check_limit, notifier)"
+    },
+    {
+        "name": "$width",
+        "detail": "$width(controlled_reference_event, timing_check_limit, threshold, notifier)"
+    },
+    {
+        "name": "$nochange",
+        "detail": "$nochange(reference_event, data_event, start_edge_offset, end_edge_offset, notifier)"
+    }
+]

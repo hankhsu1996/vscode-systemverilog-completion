@@ -1,0 +1,746 @@
+[
+    {
+        "name": "accept_on"
+    },
+    {
+        "name": "alias"
+    },
+    {
+        "name": "always"
+    },
+    {
+        "name": "always_comb"
+    },
+    {
+        "name": "always_ff"
+    },
+    {
+        "name": "always_latch"
+    },
+    {
+        "name": "and"
+    },
+    {
+        "name": "assert"
+    },
+    {
+        "name": "assign"
+    },
+    {
+        "name": "assume"
+    },
+    {
+        "name": "automatic"
+    },
+    {
+        "name": "before"
+    },
+    {
+        "name": "begin"
+    },
+    {
+        "name": "bind"
+    },
+    {
+        "name": "bins"
+    },
+    {
+        "name": "binsof"
+    },
+    {
+        "name": "bit"
+    },
+    {
+        "name": "break"
+    },
+    {
+        "name": "buf"
+    },
+    {
+        "name": "bufif0"
+    },
+    {
+        "name": "bufif1"
+    },
+    {
+        "name": "byte"
+    },
+    {
+        "name": "case"
+    },
+    {
+        "name": "casex"
+    },
+    {
+        "name": "casez"
+    },
+    {
+        "name": "cell"
+    },
+    {
+        "name": "chandle"
+    },
+    {
+        "name": "checker"
+    },
+    {
+        "name": "class"
+    },
+    {
+        "name": "clocking"
+    },
+    {
+        "name": "cmos"
+    },
+    {
+        "name": "config"
+    },
+    {
+        "name": "const"
+    },
+    {
+        "name": "constraint"
+    },
+    {
+        "name": "context"
+    },
+    {
+        "name": "continue"
+    },
+    {
+        "name": "cover"
+    },
+    {
+        "name": "covergroup"
+    },
+    {
+        "name": "coverpoint"
+    },
+    {
+        "name": "cross"
+    },
+    {
+        "name": "deassign"
+    },
+    {
+        "name": "default"
+    },
+    {
+        "name": "defparam"
+    },
+    {
+        "name": "design"
+    },
+    {
+        "name": "disable"
+    },
+    {
+        "name": "dist"
+    },
+    {
+        "name": "do"
+    },
+    {
+        "name": "edge"
+    },
+    {
+        "name": "else"
+    },
+    {
+        "name": "end"
+    },
+    {
+        "name": "endcase"
+    },
+    {
+        "name": "endchecker"
+    },
+    {
+        "name": "endclass"
+    },
+    {
+        "name": "endclocking"
+    },
+    {
+        "name": "endconfig"
+    },
+    {
+        "name": "endfunction"
+    },
+    {
+        "name": "endgenerate"
+    },
+    {
+        "name": "endgroup"
+    },
+    {
+        "name": "endinterface"
+    },
+    {
+        "name": "endmodule"
+    },
+    {
+        "name": "endpackage"
+    },
+    {
+        "name": "endprimitive"
+    },
+    {
+        "name": "endprogram"
+    },
+    {
+        "name": "endproperty"
+    },
+    {
+        "name": "endspecify"
+    },
+    {
+        "name": "endsequence"
+    },
+    {
+        "name": "endtable"
+    },
+    {
+        "name": "endtask"
+    },
+    {
+        "name": "enum"
+    },
+    {
+        "name": "event"
+    },
+    {
+        "name": "eventually"
+    },
+    {
+        "name": "expect"
+    },
+    {
+        "name": "export"
+    },
+    {
+        "name": "extends"
+    },
+    {
+        "name": "extern"
+    },
+    {
+        "name": "final"
+    },
+    {
+        "name": "first_match"
+    },
+    {
+        "name": "for"
+    },
+    {
+        "name": "force"
+    },
+    {
+        "name": "foreach"
+    },
+    {
+        "name": "forever"
+    },
+    {
+        "name": "fork"
+    },
+    {
+        "name": "forkjoin"
+    },
+    {
+        "name": "function"
+    },
+    {
+        "name": "generate"
+    },
+    {
+        "name": "genvar"
+    },
+    {
+        "name": "global"
+    },
+    {
+        "name": "highz0"
+    },
+    {
+        "name": "highz1"
+    },
+    {
+        "name": "if"
+    },
+    {
+        "name": "iff"
+    },
+    {
+        "name": "ifnone"
+    },
+    {
+        "name": "ignore_bins"
+    },
+    {
+        "name": "illegal_bins"
+    },
+    {
+        "name": "implements"
+    },
+    {
+        "name": "implies"
+    },
+    {
+        "name": "import"
+    },
+    {
+        "name": "incdir"
+    },
+    {
+        "name": "include"
+    },
+    {
+        "name": "initial"
+    },
+    {
+        "name": "inout"
+    },
+    {
+        "name": "input"
+    },
+    {
+        "name": "inside"
+    },
+    {
+        "name": "instance"
+    },
+    {
+        "name": "int"
+    },
+    {
+        "name": "integer"
+    },
+    {
+        "name": "interconnect"
+    },
+    {
+        "name": "interface"
+    },
+    {
+        "name": "intersect"
+    },
+    {
+        "name": "join"
+    },
+    {
+        "name": "join_any"
+    },
+    {
+        "name": "join_none"
+    },
+    {
+        "name": "large"
+    },
+    {
+        "name": "let"
+    },
+    {
+        "name": "liblist"
+    },
+    {
+        "name": "library"
+    },
+    {
+        "name": "local"
+    },
+    {
+        "name": "localparam"
+    },
+    {
+        "name": "logic"
+    },
+    {
+        "name": "longint"
+    },
+    {
+        "name": "macromodule"
+    },
+    {
+        "name": "matches"
+    },
+    {
+        "name": "medium"
+    },
+    {
+        "name": "modport"
+    },
+    {
+        "name": "module"
+    },
+    {
+        "name": "nand"
+    },
+    {
+        "name": "negedge"
+    },
+    {
+        "name": "nettype"
+    },
+    {
+        "name": "new"
+    },
+    {
+        "name": "nexttime"
+    },
+    {
+        "name": "nmos"
+    },
+    {
+        "name": "nor"
+    },
+    {
+        "name": "noshowcancelled"
+    },
+    {
+        "name": "not"
+    },
+    {
+        "name": "notif0"
+    },
+    {
+        "name": "notif1"
+    },
+    {
+        "name": "null"
+    },
+    {
+        "name": "or"
+    },
+    {
+        "name": "output"
+    },
+    {
+        "name": "package"
+    },
+    {
+        "name": "packed"
+    },
+    {
+        "name": "parameter"
+    },
+    {
+        "name": "pmos"
+    },
+    {
+        "name": "posedge"
+    },
+    {
+        "name": "primitive"
+    },
+    {
+        "name": "priority"
+    },
+    {
+        "name": "program"
+    },
+    {
+        "name": "property"
+    },
+    {
+        "name": "protected"
+    },
+    {
+        "name": "pull0"
+    },
+    {
+        "name": "pull1"
+    },
+    {
+        "name": "pulldown"
+    },
+    {
+        "name": "pullup"
+    },
+    {
+        "name": "pulsestyle_ondetect"
+    },
+    {
+        "name": "pulsestyle_onevent"
+    },
+    {
+        "name": "pure"
+    },
+    {
+        "name": "rand"
+    },
+    {
+        "name": "randc"
+    },
+    {
+        "name": "randcase"
+    },
+    {
+        "name": "randsequence"
+    },
+    {
+        "name": "rcmos"
+    },
+    {
+        "name": "real"
+    },
+    {
+        "name": "realtime"
+    },
+    {
+        "name": "ref"
+    },
+    {
+        "name": "reg"
+    },
+    {
+        "name": "reject_on"
+    },
+    {
+        "name": "release"
+    },
+    {
+        "name": "repeat"
+    },
+    {
+        "name": "restrict"
+    },
+    {
+        "name": "return"
+    },
+    {
+        "name": "rnmos"
+    },
+    {
+        "name": "rpmos"
+    },
+    {
+        "name": "rtran"
+    },
+    {
+        "name": "rtranif0"
+    },
+    {
+        "name": "rtranif1"
+    },
+    {
+        "name": "s_always"
+    },
+    {
+        "name": "s_eventually"
+    },
+    {
+        "name": "s_nexttime"
+    },
+    {
+        "name": "s_until"
+    },
+    {
+        "name": "s_until_with"
+    },
+    {
+        "name": "scalared"
+    },
+    {
+        "name": "sequence"
+    },
+    {
+        "name": "shortint"
+    },
+    {
+        "name": "shortreal"
+    },
+    {
+        "name": "showcancelled"
+    },
+    {
+        "name": "signed"
+    },
+    {
+        "name": "small"
+    },
+    {
+        "name": "soft"
+    },
+    {
+        "name": "solve"
+    },
+    {
+        "name": "specify"
+    },
+    {
+        "name": "specparam"
+    },
+    {
+        "name": "static"
+    },
+    {
+        "name": "string"
+    },
+    {
+        "name": "strong"
+    },
+    {
+        "name": "strong0"
+    },
+    {
+        "name": "strong1"
+    },
+    {
+        "name": "struct"
+    },
+    {
+        "name": "super"
+    },
+    {
+        "name": "supply0"
+    },
+    {
+        "name": "supply1"
+    },
+    {
+        "name": "sync_accept_on"
+    },
+    {
+        "name": "sync_reject_on"
+    },
+    {
+        "name": "table"
+    },
+    {
+        "name": "tagged"
+    },
+    {
+        "name": "task"
+    },
+    {
+        "name": "this"
+    },
+    {
+        "name": "throughout"
+    },
+    {
+        "name": "time"
+    },
+    {
+        "name": "timeprecision"
+    },
+    {
+        "name": "timeunit"
+    },
+    {
+        "name": "tran"
+    },
+    {
+        "name": "tranif0"
+    },
+    {
+        "name": "tranif1"
+    },
+    {
+        "name": "tri"
+    },
+    {
+        "name": "tri0"
+    },
+    {
+        "name": "tri1"
+    },
+    {
+        "name": "triand"
+    },
+    {
+        "name": "trior"
+    },
+    {
+        "name": "trireg"
+    },
+    {
+        "name": "type"
+    },
+    {
+        "name": "typedef"
+    },
+    {
+        "name": "union"
+    },
+    {
+        "name": "unique"
+    },
+    {
+        "name": "unique0"
+    },
+    {
+        "name": "unsigned"
+    },
+    {
+        "name": "until"
+    },
+    {
+        "name": "until_with"
+    },
+    {
+        "name": "untyped"
+    },
+    {
+        "name": "use"
+    },
+    {
+        "name": "uwire"
+    },
+    {
+        "name": "var"
+    },
+    {
+        "name": "vectored"
+    },
+    {
+        "name": "virtual"
+    },
+    {
+        "name": "void"
+    },
+    {
+        "name": "wait"
+    },
+    {
+        "name": "wait_order"
+    },
+    {
+        "name": "wand"
+    },
+    {
+        "name": "weak"
+    },
+    {
+        "name": "weak0"
+    },
+    {
+        "name": "weak1"
+    },
+    {
+        "name": "while"
+    },
+    {
+        "name": "wildcard"
+    },
+    {
+        "name": "wire"
+    },
+    {
+        "name": "with"
+    },
+    {
+        "name": "within"
+    },
+    {
+        "name": "wor"
+    },
+    {
+        "name": "xnor"
+    },
+    {
+        "name": "xor"
+    }
+]

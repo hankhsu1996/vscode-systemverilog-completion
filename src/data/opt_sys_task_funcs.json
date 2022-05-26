@@ -1,0 +1,102 @@
+[
+    {
+        "name": "$countdrivers",
+        "detail": "$countdrivers(net, net_is_forced, number_of_01x_drivers, number_of_0_drivers, number_of_1_drivers, number_of_x_drivers)",
+        "documentation": "The `$countdrivers` system function is provided to count the number of drivers on a specified net so that bus contention can be identified."
+    },
+    {
+        "name": "$getpattern",
+        "detail": "$getpattern(mem_element)",
+        "documentation": "The system function `$getpattern` provides for fast processing of stimulus patterns that have to be propagated to a large number of scalar inputs. The function reads stimulus patterns that have been loaded into a memory using the `$readmemb` or `$readmemh` system tasks."
+    },
+    {
+        "name": "$input",
+        "detail": "$input(filename)",
+        "documentation": "The `$input` system task allows command input text to come from a named file instead of from the terminal. At the end of the command file, the input is switched back to the terminal."
+    },
+    {
+        "name": "$key",
+        "detail": "$key(filename)",
+        "documentation": "The `$key` system task is used to reenable output to the key file. An optional filename argument for `$key` causes the old key file to be closed, a new file to be created, and output to be directed to the new file."
+    },
+    {
+        "name": "$nokey",
+        "detail": "$nokey",
+        "documentation": "The `$nokey` system task is used to disable output to the key file."
+    },
+    {
+        "name": "$list",
+        "detail": "$list(hierarchical_name)",
+        "documentation": "When invoked without an argument, `$list` produces a listing of the module, task, function, or named block that is defined as the current scope setting. If an optional argument is supplied, it shall refer to a specific module, task, function, or named block, in which case the specified object is listed."
+    },
+    {
+        "name": "$log",
+        "detail": "$log(filename)",
+        "documentation": "The `$log` system task is used to reenable output to the log file. An optional filename argument for `$log` causes the old log file to be closed, a new log file to be created, and output to be directed to the new log file."
+    },
+    {
+        "name": "$nolog",
+        "detail": "$nolog",
+        "documentation": "The `$nolog` system task is used to disable output to the log file."
+    },
+    {
+        "name": "$reset",
+        "detail": "$reset(stop_value, reset_value, diagnostics_value)",
+        "documentation": "The `$reset` system task enables a tool to be reset to its “time zero” state so that processing (e.g., simulation) can begin again."
+    },
+    {
+        "name": "$reset_count",
+        "detail": "$reset_count",
+        "documentation": "The `$reset_count` system function keeps track of the number of times the tool is reset."
+    },
+    {
+        "name": "$reset_value",
+        "detail": "$reset_value",
+        "documentation": "The `$reset_value` system function returns the value specified by the *reset_value* argument to the `$reset` system task. The `$reset_value` system function is used to communicate information from before a reset of a tool to the time zero state to after the reset."
+    },
+    {
+        "name": "$save",
+        "detail": "$save(filename)",
+        "documentation": "The `$save` system task saves the complete state into the file specified as an argument."
+    },
+    {
+        "name": "$incsave",
+        "detail": "$incsave(incremental_filename)",
+        "documentation": "The `$incsave` system task saves only what has changed since the last invocation of `$save`. It is not possible to do an incremental save on any file other than the one produced by the last `$save`."
+    },
+    {
+        "name": "$restart",
+        "detail": "$restart(filename)",
+        "documentation": "The `$restart` system task restores a previously saved state from a specified file. "
+    },
+    {
+        "name": "$scale",
+        "detail": "$scale(hierarchical_name)",
+        "documentation": "The `$scale` function takes a time value from a module with one time unit to be used in a module with a different time unit. The time value is converted from the time unit of one module to the time unit of the module that invokes `$scale`."
+    },
+    {
+        "name": "$scope",
+        "detail": "$scope(hierarchical_name)",
+        "documentation": "The `$scope` system task allows a particular level of hierarchy to be specified as the scope for identifying objects. This task accepts a single argument that shall be the complete hierarchical name of a module, task, function, or named block. The initial setting of the interactive scope is the first top-level module."
+    },
+    {
+        "name": "$showscopes",
+        "detail": "$showscopes(n)",
+        "documentation": "The `$showscopes` system task produces a complete list of modules, tasks, functions, and named blocks that are defined at the current scope level. An optional integer argument can be given to `$showscopes`. A nonzero argument value causes all the modules, tasks, functions, and named blocks in or below the current hierarchical scope to be listed. No argument or a zero value results in only objects at the current scope level being listed."
+    },
+    {
+        "name": "$showvars",
+        "detail": "$showvars(list_of_variables)",
+        "documentation": "The `$showvars` system task produces status information for reg and net variables, both scalar and vector. When invoked without arguments, `$showvars` displays the status of all variables in the current scope. When invoked with a list of variables, `$showvars` shows only the status of the specified variables. If the list of variables includes a bit-select or part-select of a vector, then the status information for all the bits of that vector are displayed."
+    },
+    {
+        "name": "$sreadmemb",
+        "detail": "$sreadmemb(mem_name, start_address, finish_address, string, string)",
+        "documentation": "The `$sreadmemb` system task loads data into memory *mem_name* from a character string."
+    },
+    {
+        "name": "$sreadmemh",
+        "detail": "$sreadmemh(mem_name, start_address, finish_address, string, string)",
+        "documentation": "The `$sreadmemh` system task loads data into memory *mem_name* from a character string."
+    }
+]

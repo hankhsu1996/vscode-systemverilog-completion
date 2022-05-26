@@ -3,7 +3,8 @@
         {
             "name": "$display",
             "detail": "$display(list_of_arguments)",
-            "documentation": "The `$display` system task displays its arguments in the same order as they appear in the argument list. It automatically adds a newline character to the end of its output."
+            "documentation": "The `$display` system task displays its arguments in the same order as they appear in the argument list. It automatically adds a newline character to the end of its output.",
+            "preselect": true
         },
         {
             "name": "$displayb",
@@ -23,7 +24,8 @@
         {
             "name": "$write",
             "detail": "$write(list_of_arguments)",
-            "documentation": "The `$write` system task displays its arguments in the same order as they appear in the argument list. It does not automatically add a newline character to the end of its output."
+            "documentation": "The `$write` system task displays its arguments in the same order as they appear in the argument list. It does not automatically add a newline character to the end of its output.",
+            "preselect": true
         },
         {
             "name": "$writeb",

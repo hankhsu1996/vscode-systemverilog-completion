@@ -3,6 +3,7 @@
     "displayName": "SystemVerilog Completion",
     "description": "SystemVerilog word-completion and abbreviations",
     "version": "0.0.1",
+    "publisher": "hankhsu1996",
     "author": {
         "name": "Shou-Li Hsu",
         "email": "hank850503@gmail.com"
@@ -35,9 +36,7 @@
                 ],
                 "aliases": [
                     "SystemVerilog",
-                    "systemverilog",
-                    "System Verilog",
-                    "Systemverilog"
+                    "systemverilog"
                 ],
                 "configuration": "./language-configuration.json"
             }
@@ -64,12 +63,22 @@
                     "systemverilog.disableTimingChecksProvider": {
                         "type": "boolean",
                         "default": false,
-                        "description": "Disable SystemVerilog timing checks completion"
+                        "description": "Disable timing checks completion"
                     },
                     "systemverilog.disableComplierDirectivesProvider": {
                         "type": "boolean",
                         "default": false,
-                        "description": "Disable SystemVerilog compiler directives completion"
+                        "description": "Disable compiler directives completion"
+                    },
+                    "systemverilog.enableOptComplierDirectivesProvider": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Enable optional compiler directives completion"
+                    },
+                    "systemverilog.disableConstantRangeProvider": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Disable constant range completion"
                     }
                 }
             }
@@ -83,23 +92,35 @@
     "extensionKind": [
         "workspace"
     ],
-    "main": "./out/extension.js",
+    "main": "./dist/extension.js",
     "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "pretest": "npm run compile && npm run lint",
-        "lint": "eslint src --ext ts"
+        "lexer": "antlr4ts -visitor src/grammars/SystemVerilogLexer.g4",
+        "parser": "antlr4ts -visitor src/grammars/SystemVerilogParser.g4",
+        "antlr": "npm run lexer && npm run parser",
+        "test-compile": "tsc -p ./",
+        "webpack": "webpack --mode development",
+        "watch": "webpack --mode development --watch",
+        "package": "webpack --mode production --devtool hidden-source-map",
+        "vscode:prepublish": "npm run package"
     },
     "devDependencies": {
-        "@types/vscode": "^1.67.0",
+        "@types/antlr4": "^4.7.2",
         "@types/glob": "^7.2.0",
         "@types/mocha": "^9.1.1",
         "@types/node": "14.x",
+        "@types/vscode": "^1.67.0",
         "@typescript-eslint/eslint-plugin": "^5.21.0",
         "@typescript-eslint/parser": "^5.21.0",
+        "antlr4-c3": "^2.2.1",
+        "antlr4ts": "^0.5.0-alpha.4",
+        "antlr4ts-cli": "^0.5.0-alpha.4",
+        "assert": "^2.0.0",
         "eslint": "^8.14.0",
         "glob": "^8.0.1",
-        "typescript": "^4.6.4"
+        "ts-loader": "^9.3.0",
+        "typescript": "^4.6.4",
+        "util": "^0.12.4",
+        "webpack": "^5.72.1",
+        "webpack-cli": "^4.9.2"
     }
 }

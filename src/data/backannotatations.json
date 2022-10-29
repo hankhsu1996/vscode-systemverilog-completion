@@ -1,7 +1,6 @@
-[
-    {
-        "name": "$sdf_annotate",
+{
+    "$sdf_annotate": {
         "detail": "$sdf_annotate(sdf_file, module_instance, config_file, log_file, mtm_spec, scale_factors, scale_type)",
         "documentation": "The `$sdf_annotate` system task reads timing data from an SDF file into a specified region of the design."
     }
-]
+}

@@ -94,8 +94,8 @@
     ],
     "main": "./dist/extension.js",
     "scripts": {
-        "lexer": "antlr4ts -visitor src/grammars/SystemVerilogLexer.g4",
-        "parser": "antlr4ts -visitor src/grammars/SystemVerilogParser.g4",
+        "lexer": "antlr4ts -visitor src/grammars/SystemVerilog2017Lexer.g4",
+        "parser": "antlr4ts -visitor src/grammars/SystemVerilog2017Parser.g4",
         "antlr": "npm run lexer && npm run parser",
         "test-compile": "tsc -p ./",
         "webpack": "webpack --mode development",

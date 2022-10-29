@@ -1,660 +1,501 @@
 {
-    "sim_ctrl": [
-        {
-            "name": "$finish",
-            "detail": "$finish(n)",
-            "documentation": "The `$finish` system task causes the simulator to exit and pass control back to the host operating system."
-        },
-        {
-            "name": "$stop",
-            "detail": "$stop(n)",
-            "documentation": "The `$stop` system task causes simulation to be suspended."
-        },
-        {
-            "name": "$exit",
-            "detail": "$exit",
-            "documentation": "The `$exit` control task waits for all program blocks to complete, and then makes an implicit call to `$finish`."
-        }
-    ],
-    "sim_time": [
-        {
-            "name": "$time",
-            "detail": "$time",
-            "documentation": "The `$time` system function returns an integer that is a 64-bit time, scaled to the time unit of the module that invoked it."
-        },
-        {
-            "name": "$stime",
-            "detail": "$stime",
-            "documentation": "The `$stime` system function returns an unsigned integer that is a 32-bit time, scaled to the time unit of the module that invoked it. If the actual simulation time does not fit in 32 bits, the low order 32 bits of the current simulation time are returned."
-        },
-        {
-            "name": "$realtime",
-            "detail": "$realtime",
-            "documentation": "The `$realtime` system function returns a real number time that, like `$time`, is scaled to the time unit of the module that invoked it."
-        }
-    ],
-    "timescale": [
-        {
-            "name": "$printtimescale",
-            "detail": "$printtimescale(hierarchical_identifier)",
-            "documentation": "The `$printtimescale` system task displays the time unit and precision for a particular module."
-        },
-        {
-            "name": "$timeformat",
-            "detail": "$timeformat(units_number, precision_number, suffix_string, minimum_field_width)",
-            "documentation": "The `$timeformat` system task performs the following two functions:\n-  It specifies how the `%t` format specification reports time information for the `$write`, `$display`,`$strobe`, `$monitor`, `$fwrite`, `$fdisplay`, `$fstrobe`, and `$fmonitor` group of system tasks.\n- It specifies the time unit for delays entered interactively."
-        }
-    ],
-    "conversion": [
-        {
-            "name": "$rtoi",
-            "detail": "$rtoi(real_val): integer",
-            "documentation": "The `$rtoi` system function converts real values to an `integer` type by truncating the real value (for example, 123.45 becomes 123)."
-        },
-        {
-            "name": "$itor",
-            "detail": "$itor(int_val): real",
-            "documentation": "The `$itor` system function converts integer values to real values (for example, 123 becomes 123.0)."
-        },
-        {
-            "name": "$realtobits",
-            "detail": "$realtobits(real_val): [63:0]",
-            "documentation": "The `$realtobits` system function converts values from a `real` type to a 64-bit vector representation of the real number."
-        },
-        {
-            "name": "$bitstoreal",
-            "detail": "$bitstoreal(bit_val): real",
-            "documentation": "The `$bitstoreal` system function converts a bit pattern created by `$realtobits` to a value of the `real` type. "
-        },
-        {
-            "name": "$shortrealtobits",
-            "detail": "$shortrealtobits(shortreal_val): [31:0]",
-            "documentation": "The `$shortrealtobits` system function converts values from a `shortreal` type to the 32-bit vector representation of the real number."
-        },
-        {
-            "name": "$bitstoshortreal",
-            "detail": "$bitstoshortreal(bit_val): shortreal",
-            "documentation": "The `$bitstoshortreal` system function converts a bit pattern created by `$shortrealtobits` to a value of the `shortreal` type."
-        },
-        {
-            "name": "$signed",
-            "detail": "$signed(expression)",
-            "documentation": "The `$signed` system function is available for casting the signedness of expressions. This function shall evaluate the input expression and return a value with the same size and value of the input expression. The returned value is signed."
-        },
-        {
-            "name": "$unsigned",
-            "detail": "$unsigned(expression)",
-            "documentation": "The `$unsigned` system function is available for casting the signedness of expressions. This function shall evaluate the input expression and return a value with the same size and value of the input expression. The returned value is unsigned."
-        },
-        {
-            "name": "$cast",
-            "detail": "$cast(dest_var, source_exp)",
-            "documentation": "The `$cast` system function performs a dynamic cast of an expression type."
-        }
-    ],
-    "data_query": [
-        {
-            "name": "$typename",
-            "detail": "$typename(expression) | $typename(data_type)",
-            "documentation": "The `$typename` system function returns a string that represents the resolved type of its argument."
-        },
-        {
-            "name": "$bits",
-            "detail": "$bits(expression) | $bits(data_type)",
-            "documentation": "The `$bits` system function returns the number of bits required to hold an expression as a bit stream. The return type is `integer`."
-        },
-        {
-            "name": "$isunbounded",
-            "detail": "$isunbounded(constant_expression)",
-            "documentation": "The `$isunbounded` system function returns true (`1'b1`) if the argument is `$`. Otherwise, it returns false (`1'b0`)."
-        }
-    ],
-    "arr_query": [
-        {
-            "name": "$left",
-            "detail": "$left(array_expression, dimension_expression) | $left(data_type, dimension_expression)",
-            "documentation": "The `$left` system function returns the left bound of an array or integral data type or of data objects of such a data type."
-        },
-        {
-            "name": "$right",
-            "detail": "$right(array_expression, dimension_expression) | $right(data_type, dimension_expression)",
-            "documentation": "The `$right` system function returns the right bound of an array or integral data type or of data objects of such a data type."
-        },
-        {
-            "name": "$increment",
-            "detail": "$increment(array_expression, dimension_expression) | $increment(data_type, dimension_expression)",
-            "documentation": "For a fixed-size dimension, `$increment` shall return 1 if `$left` is greater than or equal to `$right` and -1 if `$left` is less than `$right`. For a queue or dynamic array dimension, `$increment` shall return -1."
-        },
-        {
-            "name": "$low",
-            "detail": "$low(array_expression, dimension_expression) | $low(data_type, dimension_expression)",
-            "documentation": "The `$low` system function returns the same value as `$left` if `$increment` returns -1, and the same value as `$right` if `$increment` returns 1."
-        },
-        {
-            "name": "$high",
-            "detail": "$high(array_expression, dimension_expression) | $high(data_type, dimension_expression)",
-            "documentation": "The `$high` system function returns the same value as `$right` if `$increment` returns -1, and the same value as `$left` if `$increment` returns 1."
-        },
-        {
-            "name": "$size",
-            "detail": "$size(array_expression, dimension_expression) | $size(data_type, dimension_expression)",
-            "documentation": "The `$size` system function returns the number of elements in the dimension, which is equivalent to `$high` - `$low` + 1."
-        },
-        {
-            "name": "$dimensions",
-            "detail": "$dimensions(array_expression) | $dimensions(data_type)",
-            "documentation": "The `$dimensions` system function returns the following:\n- The total number of dimensions in the array (packed and unpacked, static or dynamic)\n- 1 for the `string` data type or any other nonarray type that is equivalent to a simple bit vector type\n- 0 for any other type"
-        },
-        {
-            "name": "$unpacked_dimensions",
-            "detail": "$unpacked_dimensions(array_expression) | $unpacked_dimensions(data_type)",
-            "documentation": "The `$unpacked_dimensions` system function returns the following:\n- The total number of unpacked dimensions for an array (static or dynamic)\n- 0 for any other type"
-        }
-    ],
-    "math": [
-        {
-            "name": "$clog2",
-            "detail": "$clog2(n)",
-            "documentation": "The `$clog2` system function returns the ceiling of the log base 2 of the argument (the log rounded up to an integer value).",
-            "preselect": true
-        },
-        {
-            "name": "$ln",
-            "detail": "$ln(x)",
-            "documentation": "The `$ln` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `log` function."
-        },
-        {
-            "name": "$log10",
-            "detail": "$log10(x)",
-            "documentation": "The `$log10` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `log10` function."
-        },
-        {
-            "name": "$exp",
-            "detail": "$exp(x)",
-            "documentation": "The `$exp` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `exp` function."
-        },
-        {
-            "name": "$sqrt",
-            "detail": "$sqrt(x)",
-            "documentation": "The `$sqrt` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `sqrt` function."
-        },
-        {
-            "name": "$pow",
-            "detail": "$pow(x, y)",
-            "documentation": "The `$pow` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `pow` function."
-        },
-        {
-            "name": "$floor",
-            "detail": "$floor(x)",
-            "documentation": "The `$floor` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `floor` function."
-        },
-        {
-            "name": "$ceil",
-            "detail": "$ceil(x)",
-            "documentation": "The `$ceil` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `ceil` function."
-        },
-        {
-            "name": "$sin",
-            "detail": "$sin(x)",
-            "documentation": "The `$sin` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `sin` function."
-        },
-        {
-            "name": "$cos",
-            "detail": "$cos(x)",
-            "documentation": "The `$cos` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `cos` function."
-        },
-        {
-            "name": "$tan",
-            "detail": "$tan(x)",
-            "documentation": "The `$tan` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `tan` function."
-        },
-        {
-            "name": "$asin",
-            "detail": "$asin(x)",
-            "documentation": "The `$asin` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `asin` function."
-        },
-        {
-            "name": "$acos",
-            "detail": "$acos(x)",
-            "documentation": "The `$acos` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `acos` function."
-        },
-        {
-            "name": "$atan",
-            "detail": "$atan(x)",
-            "documentation": "The `$atan` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `atan` function."
-        },
-        {
-            "name": "$atan2",
-            "detail": "$atan2(y, x)",
-            "documentation": "The `$atan2` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `atan2` function."
-        },
-        {
-            "name": "$hypot",
-            "detail": "$hypot(x, y)",
-            "documentation": "The `$hypot` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `hypot` function."
-        },
-        {
-            "name": "$sinh",
-            "detail": "$sinh(x)",
-            "documentation": "The `$sinh` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `sinh` function."
-        },
-        {
-            "name": "$cosh",
-            "detail": "$cosh(x)",
-            "documentation": "The `$cosh` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `cosh` function."
-        },
-        {
-            "name": "$tanh",
-            "detail": "$tanh(x)",
-            "documentation": "The `$tanh` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `tanh` function."
-        },
-        {
-            "name": "$asinh",
-            "detail": "$asinh(x)",
-            "documentation": "The `$asinh` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `asinh` function."
-        },
-        {
-            "name": "$acosh",
-            "detail": "$acosh(x)",
-            "documentation": "The `$acosh` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `acosh` function."
-        },
-        {
-            "name": "$atanh",
-            "detail": "$atanh(x)",
-            "documentation": "The `$atanh` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `atanh` function."
-        }
-    ],
-    "bit_vector": [
-        {
-            "name": "$countbits",
-            "detail": "$countbits(expression, list_of_control_bits)",
-            "documentation": "The function `$countbits` counts the number of bits that have a specific set of values (e.g., 0, 1, X, Z) in a bit vector."
-        },
-        {
-            "name": "$countones",
-            "detail": "$countones(expression)",
-            "documentation": "`$countones(expression)` is equivalent to `$countbits(expression, '1)`."
-        },
-        {
-            "name": "$onehot",
-            "detail": "$onehot(expression)",
-            "documentation": "`$onehot(expression)` returns true (`1'b1`) if `$countbits(expression, '1) == 1`, otherwise it returns false (`1'b0`)."
-        },
-        {
-            "name": "$onehot0",
-            "detail": "$onehot0(expression)",
-            "documentation": "`$onehot0(expression)` returns true (`1'b1`) if `$countbits(expression, '1) <= 1`, otherwise it returns false (`1'b0`)."
-        },
-        {
-            "name": "$isunknown",
-            "detail": "$isunknown(expression)",
-            "documentation": "`$isunknown(expression)` returns true (`1'b1`) if `$countbits(expression, 'x, 'z) != 0`, otherwise it returns false (`1'b0`)."
-        }
-    ],
-    "severity": [
-        {
-            "name": "$fatal",
-            "detail": "$fatal(finish_number, list_of_arguments)",
-            "documentation": "The `$fatal` system task generates a run-time fatal error, which terminates the simulation with an error code. Calling `$fatal` results in an implicit call to `$finish`."
-        },
-        {
-            "name": "$error",
-            "detail": "$error(list_of_arguments)",
-            "documentation": "The `$error` system task is a run-time error."
-        },
-        {
-            "name": "$warning",
-            "detail": "$warning(list_of_arguments)",
-            "documentation": "The `$warning` system task is a run-time warning."
-        },
-        {
-            "name": "$info",
-            "detail": "$info(list_of_arguments)",
-            "documentation": "The `$info` system task indicates that the message carries no specific severity."
-        }
-    ],
-    "assert_ctrl": [
-        {
-            "name": "$assertcontrol",
-            "detail": "$assertcontrol(control_type, assertion_type, directive_type, levels, list_of_scopes_or_assertions)",
-            "documentation": "The `$assertcontrol` system task controls the evaluation of assertions. The `$assertcontrol` system task can also be used to control the execution of assertion action blocks associated with assertions and `expect` statements."
-        },
-        {
-            "name": "$asserton",
-            "detail": "$asserton(levels, list_of_scopes_or_assertions)",
-            "documentation": "`$asserton(levels, list)` is equivalent to `$assertcontrol(3, 15, 7, levels, list)`."
-        },
-        {
-            "name": "$assertoff",
-            "detail": "$assertoff(levels, list_of_scopes_or_assertions)",
-            "documentation": "`$assertoff(levels, list)` is equivalent to `$assertcontrol(4, 15, 7, levels, list)`."
-        },
-        {
-            "name": "$assertkill",
-            "detail": "$assertkill(levels, list_of_scopes_or_assertions)",
-            "documentation": "`$assertkill(levels, list)` is equivalent to `$assertcontrol(5, 15, 7, levels, list)`."
-        },
-        {
-            "name": "$assertpasson",
-            "detail": "$assertpasson(levels, list_of_scopes_or_assertions)",
-            "documentation": "`$assertpasson(levels, list)` is equivalent to `$assertcontrol(6, 31, 7, levels, list)`."
-        },
-        {
-            "name": "$assertpassoff",
-            "detail": "$assertpassoff(levels, list_of_scopes_or_assertions)",
-            "documentation": "`$assertpassoff(levels, list)` is equivalent to `$assertcontrol(7, 31, 7, levels, list)`."
-        },
-        {
-            "name": "$assertfailon",
-            "detail": "$assertfailon(levels, list_of_scopes_or_assertions)",
-            "documentation": "`$assertfailon(levels, list)` is equivalent to `$assertcontrol(8, 31, 7, levels, list)`."
-        },
-        {
-            "name": "$assertfailoff",
-            "detail": "$assertfailoff(levels, list_of_scopes_or_assertions)",
-            "documentation": "`$assertfailoff(levels, list)` is equivalent to `$assertcontrol(9, 31, 7, levels, list)`."
-        },
-        {
-            "name": "$assertnonvacuouson",
-            "detail": "$assertnonvacuouson(levels, list_of_scopes_or_assertions)",
-            "documentation": "`$assertnonvacuouson(levels, list)` is equivalent to `$assertcontrol(10, 31, 7, levels, list)`."
-        },
-        {
-            "name": "$assertnonvacuousoff",
-            "detail": "$assertnonvacuousoff(levels, list_of_scopes_or_assertions)",
-            "documentation": "`$assertvacuousoff(levels, list)` is equivalent to `$assertcontrol(11, 31, 7, levels, list)`."
-        }
-    ],
-    "sample_value": [
-        {
-            "name": "$sampled",
-            "detail": "$sampled(expression)",
-            "documentation": "The `$sampled` system function returns the sampled value of its argument."
-        },
-        {
-            "name": "$rose",
-            "detail": "$rose(expression, clocking_event)",
-            "documentation": "The `$rose` system function returns true (`1'b1`) if the LSB of the expression changed to 1. Otherwise, it returns false (`1'b0`)."
-        },
-        {
-            "name": "$fell",
-            "detail": "$fell(expression, clocking_event)",
-            "documentation": "The `$fell` system function returns true (`1'b1`) if the LSB of the expression changed to 0. Otherwise, it returns false (`1'b0`)."
-        },
-        {
-            "name": "$stable",
-            "detail": "$stable(expression, clocking_event)",
-            "documentation": "The `$stable` system function returns true (`1'b1`) if the value of the expression did not change. Otherwise, it returns false (`1'b0`)."
-        },
-        {
-            "name": "$changed",
-            "detail": "$changed(expression, clocking_event)",
-            "documentation": "The `$changed` system function returns true (`1'b1`) if the value of the expression changed. Otherwise, it returns false (`1'b0`)."
-        },
-        {
-            "name": "$past",
-            "detail": "$past(expression1, number_of_ticks, expression2, clocking_event)",
-            "documentation": "The `$past` system function returns the sampled value of expression1 in a particular time step strictly prior to the one in which `$past` is evaluated."
-        },
-        {
-            "name": "$past_gclk",
-            "detail": "$past_gclk(expression)",
-            "documentation": "`$past_gclk(v)` is equivalent to `$past(v,,, @$global_clock)`."
-        },
-        {
-            "name": "$rose_gclk",
-            "detail": "$rose_gclk(expression)",
-            "documentation": "`$rose_gclk(v)` is equivalent to `$rose(v, @$global_clock)`."
-        },
-        {
-            "name": "$fell_gclk",
-            "detail": "$fell_gclk(expression)",
-            "documentation": "`$fell_gclk(v)` is equivalent to `$fell(v, @$global_clock)`."
-        },
-        {
-            "name": "$stable_gclk",
-            "detail": "$stable_gclk(expression)",
-            "documentation": "`$stable_gclk(v)` is equivalent to `$stable(v, @$global_clock)`."
-        },
-        {
-            "name": "$changed_gclk",
-            "detail": "$changed_gclk(expression)",
-            "documentation": "`$changed_gclk(v)` is equivalent to `$changed(v, @$global_clock)`."
-        },
-        {
-            "name": "$future_gclk",
-            "detail": "$future_gclk(expression)",
-            "documentation": "`$future_gclk(v)` is the sampled value of v at the next global clock tick."
-        },
-        {
-            "name": "$rising_gclk",
-            "detail": "$rising_gclk(expression)",
-            "documentation": "`$rising_gclk(expression)` returns true (`1'b1`) if the sampled value of the LSB of the expression is changing to 1 at the next global clocking tick. Otherwise, it returns false (`1'b0`)."
-        },
-        {
-            "name": "$falling_gclk",
-            "detail": "$falling_gclk(expression)",
-            "documentation": "`$falling_gclk(expression)` returns true (`1'b1`) if the sampled value of the LSB of the expression is changing to 0 at the next global clocking tick. Otherwise, it returns false (`1'b0`)."
-        },
-        {
-            "name": "$steady_gclk",
-            "detail": "$steady_gclk(expression)",
-            "documentation": "`$steady_gclk(expression)` returns true (`1'b1`) if the sampled value of the expression does not change at the next global clock tick. Otherwise, it returns false (`1'b0`)."
-        },
-        {
-            "name": "$changing_gclk",
-            "detail": "$changing_gclk(expression)",
-            "documentation": "`$changing_gclk(expression)` is the complement of $steady_gclk, i.e., `!$steady_gclk(expression)`."
-        }
-    ],
-    "coverage": [
-        {
-            "name": "$coverage_control",
-            "detail": "$coverage_control(control_constant, coverage_type, scope_def, modules_or_instance)",
-            "documentation": "The `$coverage_control` system function is used to control or query coverage availability in the specified portion of the hierarchy."
-        },
-        {
-            "name": "$coverage_get_max",
-            "detail": "$coverage_get_max(coverage_type, scope_def, modules_or_instance)",
-            "documentation": "The `$coverage_get_max` system function obtains the value representing 100% coverage for the specified coverage type over the specified portion of the hierarchy."
-        },
-        {
-            "name": "$coverage_get",
-            "detail": "$coverage_get(coverage_type, scope_def, modules_or_instance)",
-            "documentation": "The `$coverage_get` system function obtains the current coverage value for the given coverage type over the given portion of the hierarchy."
-        },
-        {
-            "name": "$coverage_merge",
-            "detail": "$coverage_merge(coverage_type, \"name\")",
-            "documentation": "The `$coverage_merge` system function loads and merges coverage data for the specified coverage into the simulator."
-        },
-        {
-            "name": "$coverage_save",
-            "detail": "$coverage_save(coverage_type, \"name\")",
-            "documentation": "The `$coverage_save` system function saves the current state of coverage to the tool’s coverage database and associates it with the given name."
-        },
-        {
-            "name": "$set_coverage_db_name",
-            "detail": "$set_coverage_db_name(filename)",
-            "documentation": "The `$set_coverage_db_name` system function sets the file name of the coverage database into which coverage information is saved at the end of a simulation run."
-        },
-        {
-            "name": "$load_coverage_db",
-            "detail": "$load_coverage_db(filename)",
-            "documentation": "The `$load_coverage_db` system function loads from the given file name the cumulative coverage information for all coverage group types."
-        },
-        {
-            "name": "$get_coverage",
-            "detail": "$get_coverage()",
-            "documentation": "The `$get_coverage` system function returns as a real number in the range of 0 to 100 the overall coverage of all coverage group types. This number is computed as previously described."
-        }
-    ],
-    "prob_dist": [
-        {
-            "name": "$random",
-            "detail": "$random(seed)",
-            "documentation": "The `$random` system function provides a mechanism for generating pseudo-random numbers. The function returns a new 32-bit random number each time it is called. The random number is a signed integer; it can be positive or negative."
-        },
-        {
-            "name": "$urandom",
-            "detail": "$urandom(seed)",
-            "documentation": "The `$urandom` system function provides a mechanism for generating pseudo-random numbers. The function returns a new 32-bit random number each time it is called. The number is an unsigned integer."
-        },
-        {
-            "name": "$urandom_range",
-            "detail": "$urandom_range(maxval, minval=0)",
-            "documentation": "The `$urandom_range` system function returns an unsigned integer in the range of `maxval ... minval`."
-        },
-        {
-            "name": "$dist_uniform",
-            "detail": "$dist_uniform(seed, start, end)",
-            "documentation": "The `$dist_uniform` system function returns a pseudo-random number uniformly distributed in the interval specified by its arguments."
-        },
-        {
-            "name": "$dist_normal",
-            "detail": "$dist_normal(seed, mean, standard_deviation)",
-            "documentation": "The `$dist_normal` system function returns a pseudo-random number normally distributed with the given mean and standard deviation."
-        },
-        {
-            "name": "$dist_exponential",
-            "detail": "$dist_exponential(seed, mean)",
-            "documentation": "The `$dist_exponential` system function returns a pseudo-random number exponentially distributed with the given mean."
-        },
-        {
-            "name": "$dist_poisson",
-            "detail": "$dist_poisson(seed, mean)",
-            "documentation": "The `$dist_poisson` system function returns a pseudo-random number Poisson distributed with the given mean."
-        },
-        {
-            "name": "$dist_chi_square",
-            "detail": "$dist_chi_square(seed, degrees_of_freedom)",
-            "documentation": "The `$dist_chi_square` system function returns a pseudo-random number Chi-square distributed with the given degrees of freedom."
-        },
-        {
-            "name": "$dist_t",
-            "detail": "$dist_t(seed, degrees_of_freedom)",
-            "documentation": "The `$dist_t` system function returns a pseudo-random number T distributed with the given degrees of freedom."
-        },
-        {
-            "name": "$dist_erlang",
-            "detail": "$dist_erlang(seed, k_stage, mean)",
-            "documentation": "The `$dist_erlang` system function returns a pseudo-random number Erlang distributed with the given k-stage and mean."
-        }
-    ],
-    "stoch_analysis": [
-        {
-            "name": "$q_initialize",
-            "detail": "$q_initialize(q_id, q_type, max_length, status)",
-            "documentation": "The `$q_initialize` system task creates new queues."
-        },
-        {
-            "name": "$q_add",
-            "detail": "$q_add(q_id, job_id, inform_id, status)",
-            "documentation": "The `$q_add` system task places an entry on a queue."
-        },
-        {
-            "name": "$q_remove",
-            "detail": "$q_remove(q_id, job_id, inform_id, status)",
-            "documentation": "The `$q_remove` system task receives an entry from a queue."
-        },
-        {
-            "name": "$q_full",
-            "detail": "$q_full(q_id, status)",
-            "documentation": "The `$q_full` system function checks whether there is room for another entry on a queue. It returns 0 when the queue is not full and 1 when the queue is full."
-        },
-        {
-            "name": "$q_exam",
-            "detail": "$q_exam(q_id, q_stat_code, q_stat_value, status)",
-            "documentation": "The `$q_exam` system task provides statistical information about activity at the queue `q_id`."
-        }
-    ],
-    "pla_modeling": [
-        {
-            "name": "$async$and$array",
-            "detail": "$async$and$array(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$async$and$array` system task performs an asynchronous and operation on an array of input terms and stores the result in an array of output terms."
-        },
-        {
-            "name": "$sync$and$array",
-            "detail": "$sync$and$array(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$sync$and$array` system task performs a synchronous and operation on an array of input terms and stores the result in an array of output terms."
-        },
-        {
-            "name": "$async$nand$array",
-            "detail": "$async$nand$array(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$async$nand$array` system task performs an asynchronous nand operation on an array of input terms and stores the result in an array of output terms."
-        },
-        {
-            "name": "$sync$nand$array",
-            "detail": "$sync$nand$array(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$sync$nand$array` system task performs a synchronous nand operation on an array of input terms and stores the result in an array of output terms."
-        },
-        {
-            "name": "$async$or$array",
-            "detail": "$async$or$array(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$async$or$array` system task performs an asynchronous or operation on an array of input terms and stores the result in an array of output terms."
-        },
-        {
-            "name": "$sync$or$array",
-            "detail": "$sync$or$array(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$sync$or$array` system task performs a synchronous or operation on an array of input terms and stores the result in an array of output terms."
-        },
-        {
-            "name": "$async$nor$array",
-            "detail": "$async$nor$array(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$async$nor$array` system task performs an asynchronous nor operation on an array of input terms and stores the result in an array of output terms."
-        },
-        {
-            "name": "$sync$nor$array",
-            "detail": "$sync$nor$array(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$sync$nor$array` system task performs a synchronous nor operation on an array of input terms and stores the result in an array of output terms."
-        },
-        {
-            "name": "$async$and$plane",
-            "detail": "$async$and$plane(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$async$and$plane` system task performs an asynchronous and operation on a plane of input terms and stores the result in a plane of output terms."
-        },
-        {
-            "name": "$sync$and$plane",
-            "detail": "$sync$and$plane(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$sync$and$plane` system task performs a synchronous and operation on a plane of input terms and stores the result in a plane of output terms."
-        },
-        {
-            "name": "$async$nand$plane",
-            "detail": "$async$nand$plane(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$async$nand$plane` system task performs an asynchronous nand operation on a plane of input terms and stores the result in a plane of output terms."
-        },
-        {
-            "name": "$sync$nand$plane",
-            "detail": "$sync$nand$plane(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$sync$nand$plane` system task performs a synchronous nand operation on a plane of input terms and stores the result in a plane of output terms."
-        },
-        {
-            "name": "$async$or$plane",
-            "detail": "$async$or$plane(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$async$or$plane` system task performs an asynchronous or operation on a plane of input terms and stores the result in a plane of output terms."
-        },
-        {
-            "name": "$sync$or$plane",
-            "detail": "$sync$or$plane(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$sync$or$plane` system task performs a synchronous or operation on a plane of input terms and stores the result in a plane of output terms."
-        },
-        {
-            "name": "$async$nor$plane",
-            "detail": "$async$nor$plane(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$async$nor$plane` system task performs an asynchronous nor operation on a plane of input terms and stores the result in a plane of output terms."
-        },
-        {
-            "name": "$sync$nor$plane",
-            "detail": "$sync$nor$plane(memory_identifier, input_terms, output_terms)",
-            "documentation": "The `$sync$nor$plane` system task performs a synchronous nor operation on a plane of input terms and stores the result in a plane of output terms."
-        }
-    ],
-    "misc": [
-        {
-            "name": "$system",
-            "detail": "$system(\"terminal_command_line\")",
-            "documentation": "`$system` makes a call to the C function `system`. The C function executes the argument passed to it as if the argument was executed from the terminal. `$system` can be called as either a task or a function."
-        }
-    ]
+    "$finish": {
+        "detail": "$finish(n)",
+        "documentation": "The `$finish` system task causes the simulator to exit and pass control back to the host operating system."
+    },
+    "$stop": {
+        "detail": "$stop(n)",
+        "documentation": "The `$stop` system task causes simulation to be suspended."
+    },
+    "$exit": {
+        "detail": "$exit",
+        "documentation": "The `$exit` control task waits for all program blocks to complete, and then makes an implicit call to `$finish`."
+    },
+    "$time": {
+        "detail": "$time",
+        "documentation": "The `$time` system function returns an integer that is a 64-bit time, scaled to the time unit of the module that invoked it."
+    },
+    "$stime": {
+        "detail": "$stime",
+        "documentation": "The `$stime` system function returns an unsigned integer that is a 32-bit time, scaled to the time unit of the module that invoked it. If the actual simulation time does not fit in 32 bits, the low order 32 bits of the current simulation time are returned."
+    },
+    "$realtime": {
+        "detail": "$realtime",
+        "documentation": "The `$realtime` system function returns a real number time that, like `$time`, is scaled to the time unit of the module that invoked it."
+    },
+    "$printtimescale": {
+        "detail": "$printtimescale(hierarchical_identifier)",
+        "documentation": "The `$printtimescale` system task displays the time unit and precision for a particular module."
+    },
+    "$timeformat": {
+        "detail": "$timeformat(units_number, precision_number, suffix_string, minimum_field_width)",
+        "documentation": "The `$timeformat` system task performs the following two functions:\n-  It specifies how the `%t` format specification reports time information for the `$write`, `$display`,`$strobe`, `$monitor`, `$fwrite`, `$fdisplay`, `$fstrobe`, and `$fmonitor` group of system tasks.\n- It specifies the time unit for delays entered interactively."
+    },
+    "$rtoi": {
+        "detail": "$rtoi(real_val): integer",
+        "documentation": "The `$rtoi` system function converts real values to an `integer` type by truncating the real value (for example, 123.45 becomes 123)."
+    },
+    "$itor": {
+        "detail": "$itor(int_val): real",
+        "documentation": "The `$itor` system function converts integer values to real values (for example, 123 becomes 123.0)."
+    },
+    "$realtobits": {
+        "documentation": "The `$realtobits` system function converts values from a `real` type to a 64-bit vector representation of the real number."
+    },
+    "$bitstoreal": {
+        "detail": "$bitstoreal(bit_val): real",
+        "documentation": "The `$bitstoreal` system function converts a bit pattern created by `$realtobits` to a value of the `real` type. "
+    },
+    "$shortrealtobits": {
+        "documentation": "The `$shortrealtobits` system function converts values from a `shortreal` type to the 32-bit vector representation of the real number."
+    },
+    "$bitstoshortreal": {
+        "detail": "$bitstoshortreal(bit_val): shortreal",
+        "documentation": "The `$bitstoshortreal` system function converts a bit pattern created by `$shortrealtobits` to a value of the `shortreal` type."
+    },
+    "$signed": {
+        "detail": "$signed(expression)",
+        "documentation": "The `$signed` system function is available for casting the signedness of expressions. This function shall evaluate the input expression and return a value with the same size and value of the input expression. The returned value is signed."
+    },
+    "$unsigned": {
+        "detail": "$unsigned(expression)",
+        "documentation": "The `$unsigned` system function is available for casting the signedness of expressions. This function shall evaluate the input expression and return a value with the same size and value of the input expression. The returned value is unsigned."
+    },
+    "$cast": {
+        "detail": "$cast(dest_var, source_exp)",
+        "documentation": "The `$cast` system function performs a dynamic cast of an expression type."
+    },
+    "$typename": {
+        "detail": "$typename(expression) | $typename(data_type)",
+        "documentation": "The `$typename` system function returns a string that represents the resolved type of its argument."
+    },
+    "$bits": {
+        "detail": "$bits(expression) | $bits(data_type)",
+        "documentation": "The `$bits` system function returns the number of bits required to hold an expression as a bit stream. The return type is `integer`."
+    },
+    "$isunbounded": {
+        "detail": "$isunbounded(constant_expression)",
+        "documentation": "The `$isunbounded` system function returns true (`1'b1`) if the argument is `$`. Otherwise, it returns false (`1'b0`)."
+    },
+    "$left": {
+        "detail": "$left(array_expression, dimension_expression) | $left(data_type, dimension_expression)",
+        "documentation": "The `$left` system function returns the left bound of an array or integral data type or of data objects of such a data type."
+    },
+    "$right": {
+        "detail": "$right(array_expression, dimension_expression) | $right(data_type, dimension_expression)",
+        "documentation": "The `$right` system function returns the right bound of an array or integral data type or of data objects of such a data type."
+    },
+    "$increment": {
+        "detail": "$increment(array_expression, dimension_expression) | $increment(data_type, dimension_expression)",
+        "documentation": "For a fixed-size dimension, `$increment` shall return 1 if `$left` is greater than or equal to `$right` and -1 if `$left` is less than `$right`. For a queue or dynamic array dimension, `$increment` shall return -1."
+    },
+    "$low": {
+        "detail": "$low(array_expression, dimension_expression) | $low(data_type, dimension_expression)",
+        "documentation": "The `$low` system function returns the same value as `$left` if `$increment` returns -1, and the same value as `$right` if `$increment` returns 1."
+    },
+    "$high": {
+        "detail": "$high(array_expression, dimension_expression) | $high(data_type, dimension_expression)",
+        "documentation": "The `$high` system function returns the same value as `$right` if `$increment` returns -1, and the same value as `$left` if `$increment` returns 1."
+    },
+    "$size": {
+        "detail": "$size(array_expression, dimension_expression) | $size(data_type, dimension_expression)",
+        "documentation": "The `$size` system function returns the number of elements in the dimension, which is equivalent to `$high` - `$low` + 1."
+    },
+    "$dimensions": {
+        "detail": "$dimensions(array_expression) | $dimensions(data_type)",
+        "documentation": "The `$dimensions` system function returns the following:\n- The total number of dimensions in the array (packed and unpacked, static or dynamic)\n- 1 for the `string` data type or any other nonarray type that is equivalent to a simple bit vector type\n- 0 for any other type"
+    },
+    "$unpacked_dimensions": {
+        "detail": "$unpacked_dimensions(array_expression) | $unpacked_dimensions(data_type)",
+        "documentation": "The `$unpacked_dimensions` system function returns the following:\n- The total number of unpacked dimensions for an array (static or dynamic)\n- 0 for any other type"
+    },
+    "$clog2": {
+        "detail": "$clog2(n)",
+        "documentation": "The `$clog2` system function returns the ceiling of the log base 2 of the argument (the log rounded up to an integer value).",
+        "preselect": true
+    },
+    "$ln": {
+        "detail": "$ln(x)",
+        "documentation": "The `$ln` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `log` function."
+    },
+    "$log10": {
+        "detail": "$log10(x)",
+        "documentation": "The `$log10` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `log10` function."
+    },
+    "$exp": {
+        "detail": "$exp(x)",
+        "documentation": "The `$exp` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `exp` function."
+    },
+    "$sqrt": {
+        "detail": "$sqrt(x)",
+        "documentation": "The `$sqrt` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `sqrt` function."
+    },
+    "$pow": {
+        "detail": "$pow(x, y)",
+        "documentation": "The `$pow` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `pow` function."
+    },
+    "$floor": {
+        "detail": "$floor(x)",
+        "documentation": "The `$floor` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `floor` function."
+    },
+    "$ceil": {
+        "detail": "$ceil(x)",
+        "documentation": "The `$ceil` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `ceil` function."
+    },
+    "$sin": {
+        "detail": "$sin(x)",
+        "documentation": "The `$sin` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `sin` function."
+    },
+    "$cos": {
+        "detail": "$cos(x)",
+        "documentation": "The `$cos` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `cos` function."
+    },
+    "$tan": {
+        "detail": "$tan(x)",
+        "documentation": "The `$tan` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `tan` function."
+    },
+    "$asin": {
+        "detail": "$asin(x)",
+        "documentation": "The `$asin` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `asin` function."
+    },
+    "$acos": {
+        "detail": "$acos(x)",
+        "documentation": "The `$acos` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `acos` function."
+    },
+    "$atan": {
+        "detail": "$atan(x)",
+        "documentation": "The `$atan` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `atan` function."
+    },
+    "$atan2": {
+        "detail": "$atan2(y, x)",
+        "documentation": "The `$atan2` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `atan2` function."
+    },
+    "$hypot": {
+        "detail": "$hypot(x, y)",
+        "documentation": "The `$hypot` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `hypot` function."
+    },
+    "$sinh": {
+        "detail": "$sinh(x)",
+        "documentation": "The `$sinh` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `sinh` function."
+    },
+    "$cosh": {
+        "detail": "$cosh(x)",
+        "documentation": "The `$cosh` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `cosh` function."
+    },
+    "$tanh": {
+        "detail": "$tanh(x)",
+        "documentation": "The `$tanh` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `tanh` function."
+    },
+    "$asinh": {
+        "detail": "$asinh(x)",
+        "documentation": "The `$asinh` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `asinh` function."
+    },
+    "$acosh": {
+        "detail": "$acosh(x)",
+        "documentation": "The `$acosh` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `acosh` function."
+    },
+    "$atanh": {
+        "detail": "$atanh(x)",
+        "documentation": "The `$atanh` system function accepts real value arguments and return a `real` result type. Its behavior matches the equivalent C language standard math library `atanh` function."
+    },
+    "$countbits": {
+        "detail": "$countbits(expression, list_of_control_bits)",
+        "documentation": "The function `$countbits` counts the number of bits that have a specific set of values (e.g., 0, 1, X, Z) in a bit vector."
+    },
+    "$countones": {
+        "detail": "$countones(expression)",
+        "documentation": "`$countones(expression)` is equivalent to `$countbits(expression, '1)`."
+    },
+    "$onehot": {
+        "detail": "$onehot(expression)",
+        "documentation": "`$onehot(expression)` returns true (`1'b1`) if `$countbits(expression, '1) == 1`, otherwise it returns false (`1'b0`)."
+    },
+    "$onehot0": {
+        "detail": "$onehot0(expression)",
+        "documentation": "`$onehot0(expression)` returns true (`1'b1`) if `$countbits(expression, '1) <= 1`, otherwise it returns false (`1'b0`)."
+    },
+    "$isunknown": {
+        "detail": "$isunknown(expression)",
+        "documentation": "`$isunknown(expression)` returns true (`1'b1`) if `$countbits(expression, 'x, 'z) != 0`, otherwise it returns false (`1'b0`)."
+    },
+    "$fatal": {
+        "detail": "$fatal(finish_number, list_of_arguments)",
+        "documentation": "The `$fatal` system task generates a run-time fatal error, which terminates the simulation with an error code. Calling `$fatal` results in an implicit call to `$finish`."
+    },
+    "$error": {
+        "detail": "$error(list_of_arguments)",
+        "documentation": "The `$error` system task is a run-time error."
+    },
+    "$warning": {
+        "detail": "$warning(list_of_arguments)",
+        "documentation": "The `$warning` system task is a run-time warning."
+    },
+    "$info": {
+        "detail": "$info(list_of_arguments)",
+        "documentation": "The `$info` system task indicates that the message carries no specific severity."
+    },
+    "$assertcontrol": {
+        "detail": "$assertcontrol(control_type, assertion_type, directive_type, levels, list_of_scopes_or_assertions)",
+        "documentation": "The `$assertcontrol` system task controls the evaluation of assertions. The `$assertcontrol` system task can also be used to control the execution of assertion action blocks associated with assertions and `expect` statements."
+    },
+    "$asserton": {
+        "detail": "$asserton(levels, list_of_scopes_or_assertions)",
+        "documentation": "`$asserton(levels, list)` is equivalent to `$assertcontrol(3, 15, 7, levels, list)`."
+    },
+    "$assertoff": {
+        "detail": "$assertoff(levels, list_of_scopes_or_assertions)",
+        "documentation": "`$assertoff(levels, list)` is equivalent to `$assertcontrol(4, 15, 7, levels, list)`."
+    },
+    "$assertkill": {
+        "detail": "$assertkill(levels, list_of_scopes_or_assertions)",
+        "documentation": "`$assertkill(levels, list)` is equivalent to `$assertcontrol(5, 15, 7, levels, list)`."
+    },
+    "$assertpasson": {
+        "detail": "$assertpasson(levels, list_of_scopes_or_assertions)",
+        "documentation": "`$assertpasson(levels, list)` is equivalent to `$assertcontrol(6, 31, 7, levels, list)`."
+    },
+    "$assertpassoff": {
+        "detail": "$assertpassoff(levels, list_of_scopes_or_assertions)",
+        "documentation": "`$assertpassoff(levels, list)` is equivalent to `$assertcontrol(7, 31, 7, levels, list)`."
+    },
+    "$assertfailon": {
+        "detail": "$assertfailon(levels, list_of_scopes_or_assertions)",
+        "documentation": "`$assertfailon(levels, list)` is equivalent to `$assertcontrol(8, 31, 7, levels, list)`."
+    },
+    "$assertfailoff": {
+        "detail": "$assertfailoff(levels, list_of_scopes_or_assertions)",
+        "documentation": "`$assertfailoff(levels, list)` is equivalent to `$assertcontrol(9, 31, 7, levels, list)`."
+    },
+    "$assertnonvacuouson": {
+        "detail": "$assertnonvacuouson(levels, list_of_scopes_or_assertions)",
+        "documentation": "`$assertnonvacuouson(levels, list)` is equivalent to `$assertcontrol(10, 31, 7, levels, list)`."
+    },
+    "$assertnonvacuousoff": {
+        "detail": "$assertnonvacuousoff(levels, list_of_scopes_or_assertions)",
+        "documentation": "`$assertvacuousoff(levels, list)` is equivalent to `$assertcontrol(11, 31, 7, levels, list)`."
+    },
+    "$sampled": {
+        "detail": "$sampled(expression)",
+        "documentation": "The `$sampled` system function returns the sampled value of its argument."
+    },
+    "$rose": {
+        "detail": "$rose(expression, clocking_event)",
+        "documentation": "The `$rose` system function returns true (`1'b1`) if the LSB of the expression changed to 1. Otherwise, it returns false (`1'b0`)."
+    },
+    "$fell": {
+        "detail": "$fell(expression, clocking_event)",
+        "documentation": "The `$fell` system function returns true (`1'b1`) if the LSB of the expression changed to 0. Otherwise, it returns false (`1'b0`)."
+    },
+    "$stable": {
+        "detail": "$stable(expression, clocking_event)",
+        "documentation": "The `$stable` system function returns true (`1'b1`) if the value of the expression did not change. Otherwise, it returns false (`1'b0`)."
+    },
+    "$changed": {
+        "detail": "$changed(expression, clocking_event)",
+        "documentation": "The `$changed` system function returns true (`1'b1`) if the value of the expression changed. Otherwise, it returns false (`1'b0`)."
+    },
+    "$past": {
+        "detail": "$past(expression1, number_of_ticks, expression2, clocking_event)",
+        "documentation": "The `$past` system function returns the sampled value of expression1 in a particular time step strictly prior to the one in which `$past` is evaluated."
+    },
+    "$past_gclk": {
+        "detail": "$past_gclk(expression)",
+        "documentation": "`$past_gclk(v)` is equivalent to `$past(v,,, @$global_clock)`."
+    },
+    "$rose_gclk": {
+        "detail": "$rose_gclk(expression)",
+        "documentation": "`$rose_gclk(v)` is equivalent to `$rose(v, @$global_clock)`."
+    },
+    "$fell_gclk": {
+        "detail": "$fell_gclk(expression)",
+        "documentation": "`$fell_gclk(v)` is equivalent to `$fell(v, @$global_clock)`."
+    },
+    "$stable_gclk": {
+        "detail": "$stable_gclk(expression)",
+        "documentation": "`$stable_gclk(v)` is equivalent to `$stable(v, @$global_clock)`."
+    },
+    "$changed_gclk": {
+        "detail": "$changed_gclk(expression)",
+        "documentation": "`$changed_gclk(v)` is equivalent to `$changed(v, @$global_clock)`."
+    },
+    "$future_gclk": {
+        "detail": "$future_gclk(expression)",
+        "documentation": "`$future_gclk(v)` is the sampled value of v at the next global clock tick."
+    },
+    "$rising_gclk": {
+        "detail": "$rising_gclk(expression)",
+        "documentation": "`$rising_gclk(expression)` returns true (`1'b1`) if the sampled value of the LSB of the expression is changing to 1 at the next global clocking tick. Otherwise, it returns false (`1'b0`)."
+    },
+    "$falling_gclk": {
+        "detail": "$falling_gclk(expression)",
+        "documentation": "`$falling_gclk(expression)` returns true (`1'b1`) if the sampled value of the LSB of the expression is changing to 0 at the next global clocking tick. Otherwise, it returns false (`1'b0`)."
+    },
+    "$steady_gclk": {
+        "detail": "$steady_gclk(expression)",
+        "documentation": "`$steady_gclk(expression)` returns true (`1'b1`) if the sampled value of the expression does not change at the next global clock tick. Otherwise, it returns false (`1'b0`)."
+    },
+    "$changing_gclk": {
+        "detail": "$changing_gclk(expression)",
+        "documentation": "`$changing_gclk(expression)` is the complement of $steady_gclk, i.e., `!$steady_gclk(expression)`."
+    },
+    "$coverage_control": {
+        "detail": "$coverage_control(control_constant, coverage_type, scope_def, modules_or_instance)",
+        "documentation": "The `$coverage_control` system function is used to control or query coverage availability in the specified portion of the hierarchy."
+    },
+    "$coverage_get_max": {
+        "detail": "$coverage_get_max(coverage_type, scope_def, modules_or_instance)",
+        "documentation": "The `$coverage_get_max` system function obtains the value representing 100% coverage for the specified coverage type over the specified portion of the hierarchy."
+    },
+    "$coverage_get": {
+        "detail": "$coverage_get(coverage_type, scope_def, modules_or_instance)",
+        "documentation": "The `$coverage_get` system function obtains the current coverage value for the given coverage type over the given portion of the hierarchy."
+    },
+    "$coverage_merge": {
+        "detail": "$coverage_merge(coverage_type, \"name\")",
+        "documentation": "The `$coverage_merge` system function loads and merges coverage data for the specified coverage into the simulator."
+    },
+    "$coverage_save": {
+        "detail": "$coverage_save(coverage_type, \"name\")",
+        "documentation": "The `$coverage_save` system function saves the current state of coverage to the tool’s coverage database and associates it with the given name."
+    },
+    "$set_coverage_db_name": {
+        "detail": "$set_coverage_db_name(filename)",
+        "documentation": "The `$set_coverage_db_name` system function sets the file name of the coverage database into which coverage information is saved at the end of a simulation run."
+    },
+    "$load_coverage_db": {
+        "detail": "$load_coverage_db(filename)",
+        "documentation": "The `$load_coverage_db` system function loads from the given file name the cumulative coverage information for all coverage group types."
+    },
+    "$get_coverage": {
+        "detail": "$get_coverage()",
+        "documentation": "The `$get_coverage` system function returns as a real number in the range of 0 to 100 the overall coverage of all coverage group types. This number is computed as previously described."
+    },
+    "$random": {
+        "detail": "$random(seed)",
+        "documentation": "The `$random` system function provides a mechanism for generating pseudo-random numbers. The function returns a new 32-bit random number each time it is called. The random number is a signed integer; it can be positive or negative."
+    },
+    "$urandom": {
+        "detail": "$urandom(seed)",
+        "documentation": "The `$urandom` system function provides a mechanism for generating pseudo-random numbers. The function returns a new 32-bit random number each time it is called. The number is an unsigned integer."
+    },
+    "$urandom_range": {
+        "detail": "$urandom_range(maxval, minval=0)",
+        "documentation": "The `$urandom_range` system function returns an unsigned integer in the range of `maxval ... minval`."
+    },
+    "$dist_uniform": {
+        "detail": "$dist_uniform(seed, start, end)",
+        "documentation": "The `$dist_uniform` system function returns a pseudo-random number uniformly distributed in the interval specified by its arguments."
+    },
+    "$dist_normal": {
+        "detail": "$dist_normal(seed, mean, standard_deviation)",
+        "documentation": "The `$dist_normal` system function returns a pseudo-random number normally distributed with the given mean and standard deviation."
+    },
+    "$dist_exponential": {
+        "detail": "$dist_exponential(seed, mean)",
+        "documentation": "The `$dist_exponential` system function returns a pseudo-random number exponentially distributed with the given mean."
+    },
+    "$dist_poisson": {
+        "detail": "$dist_poisson(seed, mean)",
+        "documentation": "The `$dist_poisson` system function returns a pseudo-random number Poisson distributed with the given mean."
+    },
+    "$dist_chi_square": {
+        "detail": "$dist_chi_square(seed, degrees_of_freedom)",
+        "documentation": "The `$dist_chi_square` system function returns a pseudo-random number Chi-square distributed with the given degrees of freedom."
+    },
+    "$dist_t": {
+        "detail": "$dist_t(seed, degrees_of_freedom)",
+        "documentation": "The `$dist_t` system function returns a pseudo-random number T distributed with the given degrees of freedom."
+    },
+    "$dist_erlang": {
+        "detail": "$dist_erlang(seed, k_stage, mean)",
+        "documentation": "The `$dist_erlang` system function returns a pseudo-random number Erlang distributed with the given k-stage and mean."
+    },
+    "$q_initialize": {
+        "detail": "$q_initialize(q_id, q_type, max_length, status)",
+        "documentation": "The `$q_initialize` system task creates new queues."
+    },
+    "$q_add": {
+        "detail": "$q_add(q_id, job_id, inform_id, status)",
+        "documentation": "The `$q_add` system task places an entry on a queue."
+    },
+    "$q_remove": {
+        "detail": "$q_remove(q_id, job_id, inform_id, status)",
+        "documentation": "The `$q_remove` system task receives an entry from a queue."
+    },
+    "$q_full": {
+        "detail": "$q_full(q_id, status)",
+        "documentation": "The `$q_full` system function checks whether there is room for another entry on a queue. It returns 0 when the queue is not full and 1 when the queue is full."
+    },
+    "$q_exam": {
+        "detail": "$q_exam(q_id, q_stat_code, q_stat_value, status)",
+        "documentation": "The `$q_exam` system task provides statistical information about activity at the queue `q_id`."
+    },
+    "$async$and$array": {
+        "detail": "$async$and$array(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$async$and$array` system task performs an asynchronous and operation on an array of input terms and stores the result in an array of output terms."
+    },
+    "$sync$and$array": {
+        "detail": "$sync$and$array(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$sync$and$array` system task performs a synchronous and operation on an array of input terms and stores the result in an array of output terms."
+    },
+    "$async$nand$array": {
+        "detail": "$async$nand$array(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$async$nand$array` system task performs an asynchronous nand operation on an array of input terms and stores the result in an array of output terms."
+    },
+    "$sync$nand$array": {
+        "detail": "$sync$nand$array(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$sync$nand$array` system task performs a synchronous nand operation on an array of input terms and stores the result in an array of output terms."
+    },
+    "$async$or$array": {
+        "detail": "$async$or$array(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$async$or$array` system task performs an asynchronous or operation on an array of input terms and stores the result in an array of output terms."
+    },
+    "$sync$or$array": {
+        "detail": "$sync$or$array(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$sync$or$array` system task performs a synchronous or operation on an array of input terms and stores the result in an array of output terms."
+    },
+    "$async$nor$array": {
+        "detail": "$async$nor$array(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$async$nor$array` system task performs an asynchronous nor operation on an array of input terms and stores the result in an array of output terms."
+    },
+    "$sync$nor$array": {
+        "detail": "$sync$nor$array(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$sync$nor$array` system task performs a synchronous nor operation on an array of input terms and stores the result in an array of output terms."
+    },
+    "$async$and$plane": {
+        "detail": "$async$and$plane(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$async$and$plane` system task performs an asynchronous and operation on a plane of input terms and stores the result in a plane of output terms."
+    },
+    "$sync$and$plane": {
+        "detail": "$sync$and$plane(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$sync$and$plane` system task performs a synchronous and operation on a plane of input terms and stores the result in a plane of output terms."
+    },
+    "$async$nand$plane": {
+        "detail": "$async$nand$plane(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$async$nand$plane` system task performs an asynchronous nand operation on a plane of input terms and stores the result in a plane of output terms."
+    },
+    "$sync$nand$plane": {
+        "detail": "$sync$nand$plane(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$sync$nand$plane` system task performs a synchronous nand operation on a plane of input terms and stores the result in a plane of output terms."
+    },
+    "$async$or$plane": {
+        "detail": "$async$or$plane(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$async$or$plane` system task performs an asynchronous or operation on a plane of input terms and stores the result in a plane of output terms."
+    },
+    "$sync$or$plane": {
+        "detail": "$sync$or$plane(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$sync$or$plane` system task performs a synchronous or operation on a plane of input terms and stores the result in a plane of output terms."
+    },
+    "$async$nor$plane": {
+        "detail": "$async$nor$plane(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$async$nor$plane` system task performs an asynchronous nor operation on a plane of input terms and stores the result in a plane of output terms."
+    },
+    "$sync$nor$plane": {
+        "detail": "$sync$nor$plane(memory_identifier, input_terms, output_terms)",
+        "documentation": "The `$sync$nor$plane` system task performs a synchronous nor operation on a plane of input terms and stores the result in a plane of output terms."
+    },
+    "$system": {
+        "detail": "$system(\"terminal_command_line\")",
+        "documentation": "`$system` makes a call to the C function `system`. The C function executes the argument passed to it as if the argument was executed from the terminal. `$system` can be called as either a task or a function."
+    }
 }

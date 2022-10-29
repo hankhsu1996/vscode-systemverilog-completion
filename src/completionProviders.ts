@@ -4,8 +4,8 @@ import { CompletionItemKind } from "vscode";
 import { CharStreams, CommonTokenStream, ConsoleErrorListener } from "antlr4ts";
 import * as c3 from "antlr4-c3";
 
-import { SystemVerilogLexer as Lexer } from "./grammars/SystemVerilogLexer";
-import { SystemVerilogParser as Parser } from "./grammars/SystemVerilogParser";
+import { SystemVerilog2017Lexer as Lexer } from "./grammars/SystemVerilog2017Lexer";
+import { SystemVerilog2017Parser as Parser } from "./grammars/SystemVerilog2017Parser";
 
 import utilSysTaskFuncs from "./data/util_sys_task_funcs.json";
 import ioSysTaskFuncs from "./data/io_sys_task_funcs.json";
@@ -14,6 +14,13 @@ import backannotatations from "./data/backannotatations.json";
 import optSysTaskFuncs from "./data/opt_sys_task_funcs.json";
 import compilerDirectives from "./data/compiler_directives.json";
 import optCompilerDirectives from "./data/opt_compiler_directives.json";
+
+interface SysTaskFunc {
+    [key: string]: {
+        detail?: string;
+        documentation: string;
+    };
+}
 
 const buildCompletionItems = (arr: Array<any>, kind: CompletionItemKind) => {
     return arr.map((elem) => {
@@ -40,19 +47,35 @@ const buildCompletionItems = (arr: Array<any>, kind: CompletionItemKind) => {
 export class SystemVerilogCompletionProvider
     implements vscode.CompletionItemProvider
 {
+    private sysTaskFuncs = {
+        ...utilSysTaskFuncs,
+        ...ioSysTaskFuncs,
+        ...optSysTaskFuncs,
+    } as SysTaskFunc;
+
     public provideCompletionItems(
         document: vscode.TextDocument,
         position: vscode.Position,
         token: vscode.CancellationToken,
         context: vscode.CompletionContext
     ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
+        console.log("SystemVerilogCompletionProvider provideCompletionItems");
+
+        // When only "$" is typed, do not show any completion items
+        const linePrefix = document
+            .lineAt(position)
+            .text.substring(0, position.character);
+        console.log(linePrefix);
+        if (linePrefix.endsWith("$")) {
+            return [];
+        }
+
+        // Remove the last word from the line
         const offset = document.offsetAt(position);
         const text = document
             .getText()
             .substring(0, offset)
-            .replace(/[a-zA-Z]+$/, "");
-
-        console.log("text: " + text);
+            .replace(/[a-zA-Z\$]+$/, "");
 
         // Lexer and parser
         const inputStream = new (CharStreams as any).fromString(text);
@@ -68,204 +91,86 @@ export class SystemVerilogCompletionProvider
         // Keywords
         let keywords: string[] = [];
         for (let cand of cands.tokens.keys()) {
-            const name = parser.vocabulary.getDisplayName(cand);
-            if (name.match(/^'[a-z_\$]{2,}'$/)) {
-                keywords.push(name.substring(1, name.length - 1));
+            const displayName = parser.vocabulary.getDisplayName(cand);
+            if (displayName.match(/^'[a-z_\$]{2,}'$/)) {
+                // Remove single quotes
+                const keyword = displayName.substring(
+                    1,
+                    displayName.length - 1
+                );
+                keywords.push(keyword);
             }
         }
 
-        console.log("keywords:", keywords);
-        console.log("number:", keywords.length);
+        // If the keyword is in sysTaskFuncs, add the detail and documentation
+        // Test if the keyword is in sysTaskFuncs
+        return keywords.map((keyword) => {
+            if (keyword in this.sysTaskFuncs) {
+                const item = new vscode.CompletionItem(
+                    keyword,
+                    CompletionItemKind.Function
+                );
+                item.detail = this.sysTaskFuncs[keyword].detail;
+                item.documentation = new vscode.MarkdownString(
+                    this.sysTaskFuncs[keyword].documentation
+                );
+                return item;
+            } else {
+                return new vscode.CompletionItem(
+                    keyword,
+                    CompletionItemKind.Keyword
+                );
+            }
+        });
+    }
+}
+
+export class ComplierDirectivesProvider
+    implements vscode.CompletionItemProvider
+{
+    private disableComplierDirectivesProvider: boolean;
+    private enableOptComplierDirectivesProvider: boolean;
+
+    constructor() {
+        const config = vscode.workspace.getConfiguration("systemverilog");
+        this.disableComplierDirectivesProvider =
+            config.get("disableComplierDirectivesProvider") || false;
+        this.enableOptComplierDirectivesProvider =
+            config.get("enableOptComplierDirectivesProvider") || false;
+    }
+
+    provideCompletionItems(
+        document: vscode.TextDocument,
+        position: vscode.Position,
+        token: vscode.CancellationToken
+    ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
+        console.log("ComplierDirectivesProvider provideCompletionItems");
+
+        if (this.disableComplierDirectivesProvider) {
+            return [];
+        }
+
+        // When only "`" is typed, do not show any completion items
+        // When there are other words before "`", do not show any completion items
+        const linePrefix = document
+            .lineAt(position)
+            .text.substring(0, position.character);
+
+        if (!linePrefix.match(/^\s*`\w+/)) {
+            return [];
+        }
+
+        const complierDirectives: Array<any> = this
+            .enableOptComplierDirectivesProvider
+            ? [...compilerDirectives, ...optCompilerDirectives]
+            : compilerDirectives;
 
         return buildCompletionItems(
-            keywords.map((k) => {
-                return { name: k };
-            }),
+            complierDirectives,
             CompletionItemKind.Keyword
         );
     }
 }
-
-// export class KeywordsProvider implements vscode.CompletionItemProvider {
-//     private disableKeywordsProvider: boolean;
-
-//     constructor() {
-//         this.disableKeywordsProvider =
-//             vscode.workspace
-//                 .getConfiguration("systemverilog")
-//                 .get("disableKeywordsProvider") || false;
-//     }
-
-//     provideCompletionItems(
-//         document: vscode.TextDocument,
-//         position: vscode.Position,
-//         token: vscode.CancellationToken
-//     ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
-//         if (this.disableKeywordsProvider) {
-//             return [];
-//         }
-//         const linePrefix = document
-//             .lineAt(position)
-//             .text.substring(0, position.character);
-
-//         return buildCompletionItems([], CompletionItemKind.Keyword);
-//     }
-// }
-
-// export class SysTaskFuncsProvider implements vscode.CompletionItemProvider {
-//     private disableSysTaskFuncsProvider: boolean;
-//     private enableOptSysTaskFuncsProvider: boolean;
-
-//     constructor() {
-//         const config = vscode.workspace.getConfiguration("systemverilog");
-//         this.disableSysTaskFuncsProvider =
-//             config.get("disableSysTaskFuncsProvider") || false;
-//         this.enableOptSysTaskFuncsProvider =
-//             config.get("enableOptSysTaskFuncsProvider") || false;
-//     }
-
-//     provideCompletionItems(
-//         document: vscode.TextDocument,
-//         position: vscode.Position,
-//         token: vscode.CancellationToken
-//     ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
-//         if (this.disableSysTaskFuncsProvider) {
-//             return [];
-//         }
-
-//         const linePrefix = document
-//             .lineAt(position)
-//             .text.substring(0, position.character);
-
-//         // If the word is after a dot, return []
-//         if (linePrefix.match(/\.\w*$/)) {
-//             return [];
-//         }
-
-//         // When only "$" is typed, do not show any completion items
-//         const pattern = /(?<![a-z])\$$/;
-//         if (pattern.test(linePrefix)) {
-//             return [];
-//         }
-
-//         const sysTaskFuncs: Array<any> = [
-//             ...utilSysTaskFuncs.sim_ctrl,
-//             ...utilSysTaskFuncs.sim_time,
-//             ...utilSysTaskFuncs.timescale,
-//             ...utilSysTaskFuncs.conversion,
-//             ...utilSysTaskFuncs.data_query,
-//             ...utilSysTaskFuncs.arr_query,
-//             ...utilSysTaskFuncs.math,
-//             ...utilSysTaskFuncs.bit_vector,
-//             ...utilSysTaskFuncs.severity,
-//             ...utilSysTaskFuncs.assert_ctrl,
-//             ...utilSysTaskFuncs.sample_value,
-//             ...utilSysTaskFuncs.coverage,
-//             ...utilSysTaskFuncs.prob_dist,
-//             ...utilSysTaskFuncs.stoch_analysis,
-//             ...utilSysTaskFuncs.pla_modeling,
-//             ...utilSysTaskFuncs.misc,
-//             ...ioSysTaskFuncs.display,
-//             ...ioSysTaskFuncs.file_io,
-//             ...ioSysTaskFuncs.mem_load,
-//             ...ioSysTaskFuncs.mem_dump,
-//             ...ioSysTaskFuncs.cmd_line,
-//             ...ioSysTaskFuncs.vcd,
-//             ...backannotatations,
-//         ];
-
-//         const sysTaskFuncsAll = this.enableOptSysTaskFuncsProvider
-//             ? [...sysTaskFuncs, ...optSysTaskFuncs]
-//             : sysTaskFuncs;
-
-//         return buildCompletionItems(
-//             sysTaskFuncsAll,
-//             CompletionItemKind.Function
-//         );
-//     }
-// }
-
-// export class TimingChecksProvider implements vscode.CompletionItemProvider {
-//     private disableTimingChecksProvider: boolean;
-
-//     constructor() {
-//         this.disableTimingChecksProvider =
-//             vscode.workspace
-//                 .getConfiguration("systemverilog")
-//                 .get("disableTimingChecksProvider") || false;
-//     }
-
-//     provideCompletionItems(
-//         document: vscode.TextDocument,
-//         position: vscode.Position,
-//         token: vscode.CancellationToken
-//     ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
-//         if (this.disableTimingChecksProvider) {
-//             return [];
-//         }
-
-//         const linePrefix = document
-//             .lineAt(position)
-//             .text.substring(0, position.character);
-
-//         // If the word is after a dot, return []
-//         if (linePrefix.match(/\.\w*$/)) {
-//             return [];
-//         }
-
-//         // When only "$" is typed, do not show any completion items
-//         const pattern = /(?<![a-z])\$$/;
-//         if (pattern.test(linePrefix)) {
-//             return [];
-//         }
-
-//         return buildCompletionItems(timingChecks, CompletionItemKind.Property);
-//     }
-// }
-
-// export class ComplierDirectivesProvider
-//     implements vscode.CompletionItemProvider
-// {
-//     private disableComplierDirectivesProvider: boolean;
-//     private enableOptComplierDirectivesProvider: boolean;
-
-//     constructor() {
-//         const config = vscode.workspace.getConfiguration("systemverilog");
-//         this.disableComplierDirectivesProvider =
-//             config.get("disableComplierDirectivesProvider") || false;
-//         this.enableOptComplierDirectivesProvider =
-//             config.get("enableOptComplierDirectivesProvider") || false;
-//     }
-
-//     provideCompletionItems(
-//         document: vscode.TextDocument,
-//         position: vscode.Position,
-//         token: vscode.CancellationToken
-//     ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
-//         if (this.disableComplierDirectivesProvider) {
-//             return [];
-//         }
-
-//         // When only "`" is typed, do not show any completion items
-//         const linePrefix = document
-//             .lineAt(position)
-//             .text.substring(0, position.character);
-
-//         if (/\S\`\w*$/.test(linePrefix)) {
-//             return [];
-//         }
-
-//         const complierDirectives: Array<any> = this
-//             .enableOptComplierDirectivesProvider
-//             ? [...compilerDirectives, ...optCompilerDirectives]
-//             : compilerDirectives;
-
-//         return buildCompletionItems(
-//             complierDirectives,
-//             CompletionItemKind.Keyword
-//         );
-//     }
-// }
 
 // export class ConstantRangeProvider implements vscode.CompletionItemProvider {
 //     private disableConstantRangeProvider: boolean;

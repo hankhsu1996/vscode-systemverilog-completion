@@ -45,14 +45,14 @@
             {
                 "title": "SystemVerilog Completion",
                 "properties": {
-                    "systemverilog.disableKeywordsProvider": {
+                    "systemverilog.enableKeywordsProvider": {
                         "type": "boolean",
-                        "default": false,
+                        "default": true,
                         "description": "Disable keywords completion"
                     },
-                    "systemverilog.disableSysTaskFuncsProvider": {
+                    "systemverilog.enableSysTaskFuncsProvider": {
                         "type": "boolean",
-                        "default": false,
+                        "default": true,
                         "description": "Disable system tasks and system functions completion"
                     },
                     "systemverilog.enableOptSysTaskFuncsProvider": {
@@ -60,14 +60,14 @@
                         "default": false,
                         "description": "Enable optional system tasks and system functions completion"
                     },
-                    "systemverilog.disableTimingChecksProvider": {
+                    "systemverilog.enableTimingChecksProvider": {
                         "type": "boolean",
                         "default": false,
-                        "description": "Disable timing checks completion"
+                        "description": "Disable timing checks completion (This is not implemented)"
                     },
-                    "systemverilog.disableComplierDirectivesProvider": {
+                    "systemverilog.enableComplierDirectivesProvider": {
                         "type": "boolean",
-                        "default": false,
+                        "default": true,
                         "description": "Disable compiler directives completion"
                     },
                     "systemverilog.enableOptComplierDirectivesProvider": {
@@ -75,10 +75,10 @@
                         "default": false,
                         "description": "Enable optional compiler directives completion"
                     },
-                    "systemverilog.disableConstantRangeProvider": {
+                    "systemverilog.enableConstantRangeProvider": {
                         "type": "boolean",
                         "default": false,
-                        "description": "Disable constant range completion"
+                        "description": "Disable constant range completion (This is not implemented)"
                     }
                 }
             }
@@ -99,7 +99,7 @@
         "antlr": "npm run lexer && npm run parser",
         "test-compile": "tsc -p ./",
         "webpack": "webpack --mode development",
-        "watch": "webpack --mode development --watch",
+        "watch": "webpack --mode development --watch --info-verbosity verbose",
         "package": "webpack --mode production --devtool hidden-source-map",
         "vscode:prepublish": "npm run package"
     },

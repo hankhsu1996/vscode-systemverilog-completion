@@ -1,32 +1,26 @@
-[
-    {
-        "name": "`default_decay_time",
+{
+    "`default_decay_time": {
         "detail": "`default_decay_time integer_constant | real_constant | infinite",
         "documentation": "The `` `default_decay_time `` compiler directive specifies the decay time for the trireg nets that do not have any decay time specified in the declaration. This compiler directive applies to all of the trireg nets in all the modules that follow it in the source description. An argument specifying the charge decay time shall be used with this compiler directive."
     },
-    {
-        "name": "`default_trireg_strength",
+    "`default_trireg_strength": {
         "detail": "`default_trireg_strength integer_constant",
         "documentation": "The `` `default_trireg_strength `` compiler directive specifies the charge strength of `trireg` nets."
     },
-    {
-        "name": "`delay_mode_distributed",
+    "`delay_mode_distributed": {
         "detail": "`delay_mode_distributed",
         "documentation": "The `` `delay_mode_distributed `` compiler directive specifies the distributed delay mode for all modules that follow this directive in the source description."
     },
-    {
-        "name": "`delay_mode_path",
+    "`delay_mode_path": {
         "detail": "`delay_mode_path",
         "documentation": "The `` `delay_mode_path `` compiler directive specifies the path delay mode for all modules that follow this directive in the source description. "
     },
-    {
-        "name": "`delay_mode_unit",
+    "`delay_mode_unit": {
         "detail": "`delay_mode_unit",
         "documentation": "The `` `delay_mode_unit `` compiler directive specifies the unit delay mode for all modules that follow this directive in the source description."
     },
-    {
-        "name": "`delay_mode_zero",
+    "`delay_mode_zero": {
         "detail": "`delay_mode_zero",
         "documentation": "The `` `delay_mode_zero `` compiler directive specifies the zero delay mode for all modules that follow this directive in the source description."
     }
-]
+}

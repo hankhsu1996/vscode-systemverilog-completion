@@ -1,113 +1,91 @@
-[
-    {
-        "name": "`resetall",
+{
+    "`resetall": {
         "detail": "`resetall",
         "documentation": "When `` `resetall `` compiler directive is encountered during compilation, all compiler directives are set to the default values. This is useful for ensuring that only directives that are desired in compiling a particular source file are active."
     },
-    {
-        "name": "`include",
+    "`include": {
         "detail": "`include \"filename\" | `include <filename>",
         "documentation": "The file inclusion (`` `include ``) compiler directive is used to insert the entire contents of a source file in another file during compilation. The result is as though the contents of the included source file appear in place of the `` `include `` compiler directive."
     },
-    {
-        "name": "`define",
+    "`define": {
         "detail": "`define text_macro_name macro_text",
         "documentation": "The `` `define `` compiler directive creates a macro for text substitution. This directive can be used both inside and outside design elements. After a text macro is defined, it can be used in the source description by using the (`` ` ``) character, followed by the macro name. The compiler substitutes the text of the macro for the string `` `text_macro_name `` and any actual arguments that follow it. All compiler directives are considered predefined macro names; it is illegal to redefine a compiler directive as a macro name.",
         "preselect": true
     },
-    {
-        "name": "`undef",
+    "`undef": {
         "detail": "`undef text_macro_identifier",
         "documentation": "The `` `undef `` compiler directive undefines the specified text macro if previously defined by a `` `define `` compiler directive within the compilation unit. An attempt to undefine a text macro that was not previously defined using a `` `define `` compiler directive can issue a warning."
     },
-    {
-        "name": "`undefineall",
+    "`undefineall": {
         "detail": "`undefineall",
         "documentation": "The `` `undefineall `` compiler directive undefines all text macros previously defined by `` `define `` compiler directives within the compilation unit. This directive takes no arguments and may appear anywhere in the source description"
     },
-    {
-        "name": "`ifdef",
+    "`ifdef": {
         "detail": "`ifdef text_macro_identifier",
         "documentation": "The `` `ifdef `` conditional compilation compiler directives are used to include optionally lines of SystemVerilog source description during compilation."
     },
-    {
-        "name": "`ifndef",
+    "`ifndef": {
         "detail": "`ifndef text_macro_identifier",
         "documentation": "The `` `ifndef `` conditional compilation compiler directives are used to include optionally lines of SystemVerilog source description during compilation."
     },
-    {
-        "name": "`else",
+    "`else": {
         "detail": "`else",
         "documentation": "The `` `else `` conditional compilation compiler directives are used to include optionally lines of SystemVerilog source description during compilation."
     },
-    {
-        "name": "`elsif",
+    "`elsif": {
         "detail": "`elsif text_macro_identifier",
         "documentation": "The `` `elsif `` conditional compilation compiler directives are used to include optionally lines of SystemVerilog source description during compilation."
     },
-    {
-        "name": "`endif",
+    "`endif": {
         "detail": "`endif",
         "documentation": "The `` `endif `` conditional compilation compiler directives are used to include optionally lines of SystemVerilog source description during compilation."
     },
-    {
-        "name": "`timescale",
+    "`timescale": {
         "detail": "`timescale time_unit / time_precision",
         "documentation": "The `` `timescale `` compiler directive specifies the time unit and time precision of the design elements that follow it. The time unit is the unit of measurement for time values such as the simulation time and delay values."
     },
-    {
-        "name": "`default_nettype",
+    "`default_nettype": {
         "detail": "`default_nettype default_nettype_value",
         "documentation": "The directive `` `default_nettype `` controls the net type created for implicit net declarations. It can be used only outside design elements. Multiple `` `default_nettype `` directives are allowed. The latest occurrence of this directive in the source controls the type of nets that will be implicitly declared."
     },
-    {
-        "name": "`unconnected_drive",
+    "`unconnected_drive": {
         "detail": "`unconnected_drive unconnected_drive_value",
         "documentation": "All unconnected input ports of a module, program or interface appearing between the directives `` `unconnected_drive `` and `` `nounconnected_drive `` are pulled up or pulled down instead of the normal default."
     },
-    {
-        "name": "`nounconnected_drive",
+    "`nounconnected_drive": {
         "detail": "`nounconnected_drive",
         "documentation": "All unconnected input ports of a module, program or interface appearing between the directives `` `unconnected_drive `` and `` `nounconnected_drive `` are pulled up or pulled down instead of the normal default."
     },
-    {
-        "name": "`celldefine",
+    "`celldefine": {
         "detail": "`celldefine",
         "documentation": "The directives `` `celldefine `` and `` `endcelldefine `` tag modules as cell modules."
     },
-    {
-        "name": "`endcelldefine",
+    "`endcelldefine": {
         "detail": "`endcelldefine",
         "documentation": "The directives `` `celldefine `` and `` `endcelldefine `` tag modules as cell modules."
     },
-    {
-        "name": "`pragma",
+    "`pragma": {
         "detail": "`pragma pragma_name *pragma_expressions",
         "documentation": "The `` `pragma `` directive is a structured specification that alters interpretation of the SystemVerilog source. The specification introduced by this directive is referred to as a *pragma*. The effect of pragmas other than those specified in this standard is implementation-specific."
     },
-    {
-        "name": "`line",
+    "`line": {
         "detail": "`line number filename level",
         "documentation": "The `` `line `` compiler directive can be used to specify the original source code line number and file name."
     },
-    {
-        "name": "`__FILE__",
+    "`__FILE__": {
         "detail": "`__FILE__",
         "documentation": "`` `__FILE__ `` expands to the name of the current input file, in the form of a string literal. This is the path by which a tool opened the file, not the short name specified in `` `include `` or as a tool’s input file name argument. The format of this path name may be implementation dependent. "
     },
-    {
-        "name": "`__LINE__",
+    "`__LINE__": {
         "detail": "`__LINE__",
         "documentation": "`` `__LINE__ `` expands to the current input line number, in the form of a simple decimal number. "
     },
-    {
-        "name": "`begin_keywords",
+    "`begin_keywords": {
         "detail": "`begin_keywords",
         "documentation": "A pair of directives, `` `begin_keywords `` and `` `end_keywords ``, can be used to specify what identifiers are reserved as keywords within a block of source code, based on a specific version of IEEE Std 1364 or IEEE Std 1800."
     },
-    {
-        "name": "`end_keywords",
+    "`end_keywords": {
         "detail": "`end_keywords",
         "documentation": "A pair of directives, `` `begin_keywords `` and `` `end_keywords ``, can be used to specify what identifiers are reserved as keywords within a block of source code, based on a specific version of IEEE Std 1364 or IEEE Std 1800."
     }
-]
+}

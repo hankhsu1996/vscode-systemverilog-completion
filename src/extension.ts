@@ -1,40 +1,11 @@
 import * as vscode from "vscode";
 import {
-    // KeywordsProvider,
-    // SysTaskFuncsProvider,
-    // TimingChecksProvider,
     ComplierDirectivesProvider,
     // ConstantRangeProvider,
     SystemVerilogCompletionProvider,
 } from "./completionProviders";
 
 export function activate(context: vscode.ExtensionContext) {
-    // const keywordsProvider = new KeywordsProvider();
-    // const sysTaskFuncsProvider = new SysTaskFuncsProvider();
-    // const timingChecksProvider = new TimingChecksProvider();
-    // const constantRangeProvider = new ConstantRangeProvider();
-
-    // context.subscriptions.push(
-    //     vscode.languages.registerCompletionItemProvider(
-    //         "systemverilog",
-    //         keywordsProvider
-    //     )
-    // );
-
-    // context.subscriptions.push(
-    //     vscode.languages.registerCompletionItemProvider(
-    //         "systemverilog",
-    //         sysTaskFuncsProvider
-    //     )
-    // );
-
-    // context.subscriptions.push(
-    //     vscode.languages.registerCompletionItemProvider(
-    //         "systemverilog",
-    //         timingChecksProvider
-    //     )
-    // );
-
     context.subscriptions.push(
         vscode.languages.registerCompletionItemProvider(
             "systemverilog",
@@ -70,8 +41,6 @@ export function activate(context: vscode.ExtensionContext) {
             "$"
         )
     );
-
-    console.log("extension activated");
 }
 
 export function deactivate() {}

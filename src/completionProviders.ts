@@ -1,57 +1,57 @@
 import * as vscode from "vscode";
 import { CompletionItemKind } from "vscode";
 
-import { CharStreams, CommonTokenStream, ConsoleErrorListener } from "antlr4ts";
+import { CharStreams, CommonTokenStream } from "antlr4ts";
 import * as c3 from "antlr4-c3";
 
 import { SystemVerilog2017Lexer as Lexer } from "./grammars/SystemVerilog2017Lexer";
 import { SystemVerilog2017Parser as Parser } from "./grammars/SystemVerilog2017Parser";
 
-import utilSysTaskFuncs from "./data/util_sys_task_funcs.json";
-import ioSysTaskFuncs from "./data/io_sys_task_funcs.json";
-import timingChecks from "./data/timing_checks.json";
-import backannotatations from "./data/backannotatations.json";
-import optSysTaskFuncs from "./data/opt_sys_task_funcs.json";
-import compilerDirectives from "./data/compiler_directives.json";
-import optCompilerDirectives from "./data/opt_compiler_directives.json";
+import _keywords from "./data/keywords.json";
+import _utilSysTaskFuncs from "./data/util_sys_task_funcs.json";
+import _ioSysTaskFuncs from "./data/io_sys_task_funcs.json";
+import _timingChecks from "./data/timing_checks.json";
+import _backannotatations from "./data/backannotatations.json";
+import _optSysTaskFuncs from "./data/opt_sys_task_funcs.json";
+import _compilerDirectives from "./data/compiler_directives.json";
+import _optCompilerDirectives from "./data/opt_compiler_directives.json";
 
-interface SysTaskFunc {
+interface CompletionItemData {
     [key: string]: {
         detail?: string;
-        documentation: string;
+        documentation?: string;
+        preselect?: boolean;
     };
 }
-
-const buildCompletionItems = (arr: Array<any>, kind: CompletionItemKind) => {
-    return arr.map((elem) => {
-        const item = new vscode.CompletionItem(elem.name, kind);
-        if (elem.detail) {
-            item.detail = elem.detail;
-        }
-        if (elem.documentation) {
-            item.documentation = new vscode.MarkdownString(elem.documentation);
-        }
-        if (elem.preselect) {
-            item.preselect = true;
-        }
-        if (elem.insertText) {
-            item.insertText = new vscode.SnippetString(elem.insertText);
-        }
-        if (elem.deprecated) {
-            item.tags = [vscode.CompletionItemTag.Deprecated];
-        }
-        return item;
-    });
-};
 
 export class SystemVerilogCompletionProvider
     implements vscode.CompletionItemProvider
 {
+    private keywords = _keywords;
     private sysTaskFuncs = {
-        ...utilSysTaskFuncs,
-        ...ioSysTaskFuncs,
-        ...optSysTaskFuncs,
-    } as SysTaskFunc;
+        ..._backannotatations,
+        ..._utilSysTaskFuncs,
+        ..._ioSysTaskFuncs,
+    } as CompletionItemData;
+    private optSysTaskFuncs = _optSysTaskFuncs as CompletionItemData;
+    private timingChecks = _timingChecks as CompletionItemData;
+
+    private enableKeywordsProvider: boolean;
+    private enableSysTaskFuncsProvider: boolean;
+    private enableOptSysTaskFuncsProvider: boolean;
+    private enableTimingChecksProvider: boolean;
+
+    constructor() {
+        const config = vscode.workspace.getConfiguration("systemverilog");
+        this.enableKeywordsProvider =
+            config.get("enableKeywordsProvider") || false;
+        this.enableSysTaskFuncsProvider =
+            config.get("enableSysTaskFuncsProvider") || false;
+        this.enableOptSysTaskFuncsProvider =
+            config.get("enableOptSysTaskFuncsProvider") || false;
+        this.enableTimingChecksProvider =
+            config.get("enableTimingChecksProvider") || false;
+    }
 
     public provideCompletionItems(
         document: vscode.TextDocument,
@@ -59,13 +59,10 @@ export class SystemVerilogCompletionProvider
         token: vscode.CancellationToken,
         context: vscode.CompletionContext
     ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
-        console.log("SystemVerilogCompletionProvider provideCompletionItems");
-
         // When only "$" is typed, do not show any completion items
         const linePrefix = document
             .lineAt(position)
             .text.substring(0, position.character);
-        console.log(linePrefix);
         if (linePrefix.endsWith("$")) {
             return [];
         }
@@ -86,55 +83,129 @@ export class SystemVerilogCompletionProvider
 
         // Code completion core
         let core = new c3.CodeCompletionCore(parser);
-        let cands = core.collectCandidates(Number.MAX_SAFE_INTEGER, result);
+        let candsPre = core.collectCandidates(Number.MAX_SAFE_INTEGER, result);
 
-        // Keywords
-        let keywords: string[] = [];
-        for (let cand of cands.tokens.keys()) {
+        // Candidates
+        let cands: string[] = [];
+        for (let cand of candsPre.tokens.keys()) {
             const displayName = parser.vocabulary.getDisplayName(cand);
-            if (displayName.match(/^'[a-z_\$]{2,}'$/)) {
+            if (displayName.match(/^'[a-z_\$0-9]{2,}'$/)) {
                 // Remove single quotes
                 const keyword = displayName.substring(
                     1,
                     displayName.length - 1
                 );
-                keywords.push(keyword);
+                cands.push(keyword);
             }
         }
 
-        // If the keyword is in sysTaskFuncs, add the detail and documentation
-        // Test if the keyword is in sysTaskFuncs
-        return keywords.map((keyword) => {
-            if (keyword in this.sysTaskFuncs) {
-                const item = new vscode.CompletionItem(
-                    keyword,
-                    CompletionItemKind.Function
-                );
-                item.detail = this.sysTaskFuncs[keyword].detail;
-                item.documentation = new vscode.MarkdownString(
-                    this.sysTaskFuncs[keyword].documentation
-                );
-                return item;
-            } else {
-                return new vscode.CompletionItem(
-                    keyword,
-                    CompletionItemKind.Keyword
-                );
+        let items: vscode.CompletionItem[] = [];
+        for (let cand of cands) {
+            // If cand is a keyword
+            if (this.keywords.includes(cand)) {
+                if (this.enableKeywordsProvider) {
+                    items.push(
+                        new vscode.CompletionItem(
+                            cand,
+                            CompletionItemKind.Keyword
+                        )
+                    );
+                }
             }
-        });
+            // If cand is a system task/function
+            else if (cand in this.sysTaskFuncs) {
+                if (this.enableSysTaskFuncsProvider) {
+                    const item = new vscode.CompletionItem(
+                        cand,
+                        CompletionItemKind.Function
+                    );
+                    item.detail = this.sysTaskFuncs[cand].detail;
+                    item.documentation = new vscode.MarkdownString(
+                        this.sysTaskFuncs[cand].documentation
+                    );
+                    item.preselect = this.sysTaskFuncs[cand].preselect;
+                    items.push(item);
+                }
+            }
+            // if cand is an optional system task/function
+            else if (cand in this.optSysTaskFuncs) {
+                if (this.enableOptSysTaskFuncsProvider) {
+                    const item = new vscode.CompletionItem(
+                        cand,
+                        CompletionItemKind.Function
+                    );
+                    item.detail = this.optSysTaskFuncs[cand].detail;
+                    item.documentation = new vscode.MarkdownString(
+                        this.optSysTaskFuncs[cand].documentation
+                    );
+                    item.preselect = this.optSysTaskFuncs[cand].preselect;
+                    items.push(item);
+                }
+            }
+            // If cand is a timing check
+            else if (cand in this.timingChecks) {
+                if (this.enableTimingChecksProvider) {
+                    const item = new vscode.CompletionItem(
+                        cand,
+                        CompletionItemKind.Function
+                    );
+                    item.detail = this.timingChecks[cand].detail;
+                    item.documentation = new vscode.MarkdownString(
+                        this.timingChecks[cand].documentation
+                    );
+                    item.preselect = this.timingChecks[cand].preselect;
+                    items.push(item);
+                }
+            }
+            // Special keywords
+            else if (cand === "randomize" || cand === "sample") {
+                if (this.enableKeywordsProvider) {
+                    items.push(
+                        new vscode.CompletionItem(
+                            cand,
+                            CompletionItemKind.Function
+                        )
+                    );
+                }
+            } else if (cand === "std" || cand === "$root" || cand === "$unit") {
+                if (this.enableKeywordsProvider) {
+                    items.push(
+                        new vscode.CompletionItem(
+                            cand,
+                            CompletionItemKind.Module
+                        )
+                    );
+                }
+            } else if (cand === "option" || cand === "type_option") {
+                if (this.enableKeywordsProvider) {
+                    items.push(
+                        new vscode.CompletionItem(
+                            cand,
+                            CompletionItemKind.Field
+                        )
+                    );
+                }
+            }
+            // Else, raise an error
+            else {
+                console.error(`Unknown candidate: ${cand}`);
+            }
+        }
+
+        return items;
     }
 }
 
 export class ComplierDirectivesProvider
     implements vscode.CompletionItemProvider
 {
-    private disableComplierDirectivesProvider: boolean;
+    private enableComplierDirectivesProvider: boolean;
     private enableOptComplierDirectivesProvider: boolean;
 
     constructor() {
         const config = vscode.workspace.getConfiguration("systemverilog");
-        this.disableComplierDirectivesProvider =
-            config.get("disableComplierDirectivesProvider") || false;
+        this.enableComplierDirectivesProvider =
+            config.get("enableComplierDirectivesProvider") || false;
         this.enableOptComplierDirectivesProvider =
             config.get("enableOptComplierDirectivesProvider") || false;
     }
@@ -144,12 +215,6 @@ export class ComplierDirectivesProvider
         position: vscode.Position,
         token: vscode.CancellationToken
     ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
-        console.log("ComplierDirectivesProvider provideCompletionItems");
-
-        if (this.disableComplierDirectivesProvider) {
-            return [];
-        }
-
         // When only "`" is typed, do not show any completion items
         // When there are other words before "`", do not show any completion items
         const linePrefix = document
@@ -160,15 +225,43 @@ export class ComplierDirectivesProvider
             return [];
         }
 
-        const complierDirectives: Array<any> = this
-            .enableOptComplierDirectivesProvider
-            ? [...compilerDirectives, ...optCompilerDirectives]
-            : compilerDirectives;
+        // For each key in compilerDirectives, create a CompletionItem
+        let items: vscode.CompletionItem[] = [];
+        if (this.enableComplierDirectivesProvider) {
+            const compilerDirectives =
+                _compilerDirectives as CompletionItemData;
+            for (let key in compilerDirectives) {
+                const item = new vscode.CompletionItem(
+                    key,
+                    CompletionItemKind.Keyword
+                );
+                item.detail = compilerDirectives[key].detail;
+                item.documentation = new vscode.MarkdownString(
+                    compilerDirectives[key].documentation
+                );
+                item.preselect = compilerDirectives[key].preselect;
+                items.push(item);
+            }
+        }
 
-        return buildCompletionItems(
-            complierDirectives,
-            CompletionItemKind.Keyword
-        );
+        if (this.enableOptComplierDirectivesProvider) {
+            const optCompilerDirectives =
+                _optCompilerDirectives as CompletionItemData;
+            for (let key in optCompilerDirectives) {
+                const item = new vscode.CompletionItem(
+                    key,
+                    CompletionItemKind.Keyword
+                );
+                item.detail = optCompilerDirectives[key].detail;
+                item.documentation = new vscode.MarkdownString(
+                    optCompilerDirectives[key].documentation
+                );
+                item.preselect = optCompilerDirectives[key].preselect;
+                items.push(item);
+            }
+        }
+
+        return items;
     }
 }
 

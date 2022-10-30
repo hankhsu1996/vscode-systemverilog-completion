@@ -2,7 +2,7 @@
     "name": "systemverilog-completion",
     "displayName": "SystemVerilog Completion",
     "description": "SystemVerilog word-completion and abbreviations",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "publisher": "hankhsu1996",
     "author": {
         "name": "Shou-Li Hsu",

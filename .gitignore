@@ -133,3 +133,6 @@ dist
 src/grammars/*.interp
 src/grammars/*.tokens
 src/grammars/*.ts
+
+# VS code extension files
+*.vsix

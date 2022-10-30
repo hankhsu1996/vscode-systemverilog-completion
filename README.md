@@ -8,11 +8,9 @@ The SystemVerilog syntax is based on IEEE Std 1800-2017.
 
 ### Keywords Completion
 
-The extension provides keywords completion.
+The extension provides context-awared keywords completion. For example, when you are closing a module, the extension will only suggest `endmodule` keyword.
 
-![](resources/keywords1.gif)
-
-![](resources/keywords2.gif)
+![](resources/keywords.gif)
 
 ### System Tasks and System Functions Completion
 
@@ -27,7 +25,7 @@ The extension provides utility system tasks and system functions completion, inc
 -   Assertion control system tasks, such as `$assertcontrol`
 -   Probability distribution system functions, such as `$random` and `$dist_normal`
 
-![](resources/util_sys_task_funcs1.gif)
+![](resources/util_sys_task_funcs.gif)
 
 The extension provides I/O system tasks and system functions completion, including:
 
@@ -37,7 +35,7 @@ The extension provides I/O system tasks and system functions completion, includi
 -   Command line I/O system functions, such as `$test$plusargs` and `$value$plusargs`
 -   VCD file I/O system tasks, such as `$dumpfile`
 
-![](resources/io_sys_task_funcs1.gif)
+![](resources/io_sys_task_funcs.gif)
 
 ### Timing Checks Completion
 

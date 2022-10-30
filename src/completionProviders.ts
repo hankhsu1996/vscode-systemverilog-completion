@@ -185,6 +185,15 @@ export class SystemVerilogCompletionProvider
                         )
                     );
                 }
+            } else if (cand === "1step") {
+                if (this.enableKeywordsProvider) {
+                    items.push(
+                        new vscode.CompletionItem(
+                            cand,
+                            CompletionItemKind.Keyword
+                        )
+                    );
+                }
             }
             // Else, raise an error
             else {
